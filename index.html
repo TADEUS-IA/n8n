@@ -87,6 +87,28 @@
             transform: translateY(0);
         }
 
+        /* --- [CODIGOS] ESTILOS PARA O LOGO NO CABEÇALHO --- */
+        .header-logo-container {
+            position: absolute; /* Flutua sobre o conteúdo */
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 2rem; /* Espaçamento do topo e laterais */
+            z-index: 10;   /* Garante que fique acima do vídeo */
+            text-align: right; /* <-- MUDANÇA AQUI: Alinha o logo à direita */
+        }
+
+        .header-logo {
+            max-height: 45px; /* Defina a altura máxima do seu logo */
+            width: auto;      /* Mantém a proporção correta */
+            opacity: 0.9;
+            transition: opacity 0.3s ease;
+        }
+
+        .header-logo:hover {
+            opacity: 1; /* Efeito sutil ao passar o mouse */
+        }
+
         /* --- HEADER --- */
         #hero {
             height: 100vh;
@@ -137,6 +159,12 @@
         .feature-text h3 { font-size: 2.5rem; margin-bottom: 1rem; }
         .feature-text p { color: var(--cor-texto-secundario); font-size: 1.2rem; line-height: 1.7; }
 
+        /* [CODIGOS] Adicionando a cor verde solicitada para os títulos dos 3 pilares da liberdade. */
+        #beneficios .feature-text p strong {
+            color: var(--cor-verde);
+            font-weight: 600; /* Garante a consistência do peso da fonte */
+        }
+        
         /* --- SEÇÃO INTEGRAÇÕES --- */
         #integracoes { overflow: hidden; background-color: var(--cor-fundo-secundario); }
         .logos-container { position: relative; padding: 2rem 0; margin-top: 3rem; -webkit-mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent); mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent); }
@@ -368,10 +396,17 @@
         /* --- AJUSTES FINOS PARA CELULARES (ATÉ 768px) --- */
         @media (max-width: 768px) {
             section { padding: 5rem 0; }
-            .container { padding: 0 1rem; } /* Reduz o padding lateral para ganhar espaço */
+            .container { padding: 0 1.5rem; } /* Aumentei um pouco o padding para dar mais respiro */
 
             h2 { font-size: clamp(2rem, 7vw, 2.5rem); } /* Ajuste fino no tamanho dos títulos */
             p.subtitulo { font-size: 1.2rem; }
+
+            .header-logo-container {
+                padding: 1.5rem; /* Menos espaçamento em telas menores */
+            }
+            .header-logo {
+                max-height: 165px; /* Logo um pouco menor no celular */
+            }
 
             .title-grid { grid-template-columns: 1fr; gap: 1rem; }
             .vertical-text, .left, .right { display: none; }
@@ -401,11 +436,46 @@
             .objeccao-card { padding: 1.5rem; }
             .footer-grid { text-align: center; }
         }
+
+        /* [CODIGOS] Adicionando um breakpoint para telas ainda menores, garantindo a UX em qualquer dispositivo. */
+        /* --- AJUSTES PARA CELULARES PEQUENOS (ATÉ 480px) --- */
+        @media (max-width: 480px) {
+            h1 { font-size: 2.5rem; } /* Reduz o título principal para evitar quebras indesejadas */
+            p.subtitulo { font-size: 1.1rem; }
+            .btn {
+                padding: 0.9rem 2rem; /* Botões ligeiramente menores */
+                font-size: 1rem;
+            }
+            .depoimento-card {
+                flex: 0 0 95%; /* Ocupa quase toda a tela para focar no conteúdo */
+                max-width: 95%;
+            }
+            .price-display {
+                gap: 1rem; /* Menor espaçamento entre os preços */
+            }
+            .price-display .new-price {
+                font-size: clamp(3rem, 15vw, 3.5rem); /* Ajuste fino no preço para telas bem pequenas */
+            }
+            .floating-buttons {
+                bottom: 15px;
+                right: 15px;
+            }
+            .float-btn {
+                width: 55px;
+                height: 55px;
+            }
+        }
     </style>
 </head>
 <body>
 
     <header id="hero">
+        <div class="header-logo-container">
+            <a href="#hero">
+                <img src="logon8n.png" alt="Logo da Sua Empresa" class="header-logo">
+            </a>
+        </div>
+
         <video id="video-background" autoplay muted loop playsinline poster="https://images.pexels.com/photos/3401402/pexels-photo-3401402.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
             <source src="n8n.mp4" type="video/mp4">
         </video>
@@ -468,7 +538,7 @@
                     </div>
                     <div class="feature-text animate-on-scroll">
                         <h3>Os 3 Pilares da Sua Liberdade.</h3>
-                        <p><strong>1. Renda Recorrente:</strong> Crie soluções e cobre uma mensalidade pela manutenção. Seu trabalho de um mês pode gerar renda por anos. <br><strong>2. Liberdade de Tempo:</strong> Depois de implementados, os sistemas trabalham 24/7. Você ganha de volta suas horas para focar em crescer ou viver. <br><strong>3. Localização Independente:</strong> Seu cérebro e um laptop. É tudo que você precisa para atender clientes em qualquer lugar do mundo.</p>
+                        <p><strong>[1. Renda Recorrente:]</strong> Crie soluções e cobre uma mensalidade pela manutenção. Seu trabalho de um mês pode gerar renda por anos. <br><strong>[2. Liberdade de Tempo:]</strong> Após implementados, os sistemas trabalham 24/7. Você ganha de volta suas horas para focar em crescer ou viver. <br><strong>[3. Localização Independente:]</strong> Seu cérebro e um laptop. É tudo que você precisa para atender clientes em qualquer lugar do mundo.</p>
                     </div>
                 </div>
             </div>
@@ -561,9 +631,6 @@
                         <img src="calendar.png" alt="calendar">
                         <img src="drive.png" alt="drive">
                         <img src="https://cdn.worldvectorlogo.com/logos/telegram-1.svg" alt="Telegram">
-
-                       
-                        
                     </div>
                 </div>
             </div>
@@ -580,6 +647,14 @@
                          <div class="depoimento-card"><blockquote>"O módulo de prospecção é ouro puro. Aprendi a abordar donos de hamburguerias e mostrar o valor. A automação de pedidos via WhatsApp que eu implementei para um cliente pagou o curso em duas semanas."</blockquote><div class="author"><img src="https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg" alt="Juliana Martins"><div class="author-info"><strong>Juliana Martins</strong><small>Designer Gráfico & Empreendedora</small></div></div></div>
                          <div class="depoimento-card"><blockquote>"Eu achava que era complexo demais. Mas a didática é surreal. Hoje eu gerencio as automações de três barbearias e estou saindo do meu emprego CLT. É uma mudança de vida, literalmente."</blockquote><div class="author"><img src="https://images.pexels.com/photos/842571/pexels-photo-842571.jpeg" alt="Ricardo Almeida"><div class="author-info"><strong>Ricardo Almeida</strong><small>Ex-Vendedor de Loja</small></div></div></div>
                          <div class="depoimento-card"><blockquote>"A liberdade de tempo que ganhei é inacreditável. Criei um sistema para um salão de beleza que funciona sozinho. Agora recebo mensalmente e só preciso dar suporte esporádico. Mágico!"</blockquote><div class="author"><img src="https://images.pexels.com/photos/937481/pexels-photo-937481.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Fernando Lima"><div class="author-info"><strong>Fernando Lima</strong><small>Ex-Garçom</small></div></div></div>
+                         <div class="depoimento-card"><blockquote>"Graças ao n8n, consegui automatizar todo o processo de onboarding de clientes da minha consultoria. Ganhei tempo e profissionalismo. Meus clientes notaram a diferença!"</blockquote><div class="author"><img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Roberto Costa"><div class="author-info"><strong>Roberto Costa</strong><small>Consultor de Marketing</small></div></div></div>
+                         <div class="depoimento-card"><blockquote>"Eu sempre quis trabalhar de casa, mas não sabia como. O n8n me deu uma nova carreira. Hoje, crio automações para pequenas empresas e tenho a flexibilidade que sempre sonhei."</blockquote><div class="author"><img src="https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Mariana Souza"><div class="author-info"><strong>Mariana Souza</strong><small>Assistente Virtual Autônoma</small></div></div></div>
+                         <div class="depoimento-card"><blockquote>"O suporte da comunidade é incrível. Sempre que tive uma dúvida, alguém me ajudou. Isso faz toda a diferença para quem está começando."</blockquote><div class="author"><img src="https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Lucas Pereira"><div class="author-info"><strong>Lucas Pereira</strong><small>Estudante e Futuro Empreendedor</small></div></div></div>
+                         <div class="depoimento-card"><blockquote>"Consegui otimizar o fluxo de trabalho do meu e-commerce, desde o processamento de pedidos até as notificações de envio. Aumentei a satisfação do cliente e reduzi o trabalho manual em 50%."</blockquote><div class="author"><img src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Patrícia Gomes"><div class="author-info"><strong>Patrícia Gomes</strong><small>Dona de E-commerce</small></div></div></div>
+                         <div class="depoimento-card"><blockquote>"Aprender n8n foi um divisor de águas. Agora sou capaz de criar soluções sob medida para os problemas dos meus clientes, algo que antes eu só sonhava em fazer com programação."</blockquote><div class="author"><img src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Guilherme Santos"><div class="author-info"><strong>Guilherme Santos</strong><small>Desenvolvedor Frontend</small></div></div></div>
+                         <div class="depoimento-card"><blockquote>"O retorno do investimento foi quase imediato. O primeiro projeto que peguei usando o que aprendi já cobriu o valor do curso e ainda sobrou. Altamente recomendado!"</blockquote><div class="author"><img src="https://images.pexels.com/photos/1310522/pexels-photo-1310522.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Aline Ferreira"><div class="author-info"><strong>Aline Ferreira</strong><small>Analista de Dados</small></div></div></div>
+                         <div class="depoimento-card"><blockquote>"Minha vida antes era preencher planilhas. Com o n8n, criei um sistema que faz isso para mim. Agora uso meu tempo para tarefas mais estratégicas. Minha produtividade explodiu!"</blockquote><div class="author"><img src="https://images.pexels.com/photos/1484809/pexels-photo-1484809.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Thiago Rocha"><div class="author-info"><strong>Thiago Rocha</strong><small>Gerente de Projetos</small></div></div></div>
+                         <div class="depoimento-card"><blockquote>"Eu estava cansado da rotina. O n8n me mostrou um caminho para empreender no digital e oferecer um serviço de alto valor para o mercado. É realmente uma virada de chave."</blockquote><div class="author"><img src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Diego Oliveira"><div class="author-info"><strong>Diego Oliveira</strong><small>Ex-Comerciante</small></div></div></div>
                     </div>
                     <button id="next-btn" class="carousel-btn" aria-label="Próximo"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
                 </div>
@@ -758,17 +833,17 @@
                 };
 
                 const scrollNext = () => {
-                    if (carouselWrapper.scrollLeft + carouselWrapper.offsetWidth >= carouselWrapper.scrollWidth - 50) {
-                        carouselWrapper.scrollLeft = 0;
+                    if (carouselWrapper.scrollLeft + carouselWrapper.clientWidth >= carouselWrapper.scrollWidth - 1) { 
+                        carouselWrapper.scrollTo({ left: 0, behavior: 'smooth' });
                     } else {
-                        carouselWrapper.scrollLeft += getScrollAmount();
+                        carouselWrapper.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
                     }
                 };
                 const scrollPrev = () => {
                     if (carouselWrapper.scrollLeft <= 0) {
-                        carouselWrapper.scrollLeft = carouselWrapper.scrollWidth;
+                        carouselWrapper.scrollTo({ left: carouselWrapper.scrollWidth, behavior: 'smooth' });
                     } else {
-                        carouselWrapper.scrollLeft -= getScrollAmount();
+                        carouselWrapper.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
                     }
                 };
                 const startAutoScroll = () => { autoScrollInterval = setInterval(scrollNext, 4000); };
