@@ -65,7 +65,7 @@
         
         .btn:hover {
             background-color: var(--cor-verde-fluorescente);
-            color: var(--cor-fundo); /* Texto escuro para melhor contraste */
+            color: var(--cor-fundo);
             transform: scale(1.05);
             animation-play-state: paused;
         }
@@ -89,24 +89,24 @@
 
         /* --- [CODIGOS] ESTILOS PARA O LOGO NO CABEÇALHO --- */
         .header-logo-container {
-            position: absolute; /* Flutua sobre o conteúdo */
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            padding: 2rem; /* Espaçamento do topo e laterais */
-            z-index: 10;   /* Garante que fique acima do vídeo */
-            text-align: right; /* <-- MUDANÇA AQUI: Alinha o logo à direita */
+            padding: 2rem;
+            z-index: 10;
+            text-align: right;
         }
 
         .header-logo {
-            max-height: 45px; /* Defina a altura máxima do seu logo */
-            width: auto;      /* Mantém a proporção correta */
+            max-height: 45px;
+            width: auto;
             opacity: 0.9;
             transition: opacity 0.3s ease;
         }
 
         .header-logo:hover {
-            opacity: 1; /* Efeito sutil ao passar o mouse */
+            opacity: 1;
         }
 
         /* --- HEADER --- */
@@ -130,6 +130,67 @@
             z-index: 1;
             opacity: 0.25;
         }
+        
+        /* --- [CODIGOS] ESTILOS PARA VÍDEO LIGHTBOX --- */
+        .video-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .video-modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .video-modal-content {
+            position: relative;
+            width: 90%;
+            max-width: 1100px;
+            aspect-ratio: 16 / 9;
+            transform: scale(0.8);
+            transition: transform 0.4s ease;
+        }
+
+        .video-modal.active .video-modal-content {
+            transform: scale(1);
+        }
+
+        .video-modal video,
+        .video-modal iframe {
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            border: none;
+        }
+
+        .close-modal-btn {
+            position: absolute;
+            top: -40px;
+            right: 0px;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 3rem;
+            font-weight: 300;
+            cursor: pointer;
+            line-height: 1;
+            transition: transform 0.3s ease;
+        }
+
+        .close-modal-btn:hover {
+            transform: scale(1.2);
+        }
 
         .hero-content { position: relative; z-index: 2; width: 100%; }
         .title-grid { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 2rem; padding: 2rem; }
@@ -139,12 +200,67 @@
         .main-title { display: flex; flex-direction: column; gap: 1.5rem; }
 
         /* --- SEÇÃO PODER --- */
-        #poder { background-color: var(--cor-fundo-secundario); }
+        #poder { background-color: var(--cor-fundo-secundario); padding-bottom: 0; }
         .poder-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 4rem; text-align: left; }
         .poder-card { background-color: #1c1c1e; padding: 2.5rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); }
         .poder-card h3 { font-size: 1.5rem; color: var(--cor-verde); margin-bottom: 1rem; }
         .poder-card p { color: var(--cor-texto-secundario); line-height: 1.7; }
         
+        /* --- [CODIGOS] SEÇÃO VÍDEO DEMONSTRAÇÃO INTERATIVO --- */
+        #video-demonstracao {
+            background-color: var(--cor-fundo-secundario);
+        }
+        .video-showcase {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin: 3rem auto 0 auto;
+            border-radius: 20px;
+            overflow: hidden;
+            background-color: #000;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+        }
+        .video-showcase-poster {
+            display: block;
+            width: 100%;
+            height: auto;
+            opacity: 0.6;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .video-showcase:hover .video-showcase-poster {
+            opacity: 0.4;
+            transform: scale(1.05);
+        }
+        .play-button-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90px;
+            height: 90px;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            transition: all 0.3s ease;
+            pointer-events: none; /* O clique será no container pai */
+        }
+        .video-showcase:hover .play-button-overlay {
+            transform: translate(-50%, -50%) scale(1.1);
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .play-button-overlay svg {
+            width: 40px;
+            height: 40px;
+            margin-left: 5px; /* Ajuste visual para o ícone de play */
+        }
+
         /* --- SEÇÕES FEATURES (ZIG-ZAG) --- */
         .feature-section {
             display: grid;
@@ -158,18 +274,13 @@
         .feature-image img { width: 100%; height: auto; border-radius: 30px; display: block; }
         .feature-text h3 { font-size: 2.5rem; margin-bottom: 1rem; }
         .feature-text p { color: var(--cor-texto-secundario); font-size: 1.2rem; line-height: 1.7; }
-
-        /* [CODIGOS] Adicionando a cor verde solicitada para os títulos dos 3 pilares da liberdade. */
         #beneficios .feature-text p strong {
             color: var(--cor-verde);
-            font-weight: 600; /* Garante a consistência do peso da fonte */
+            font-weight: 600;
         }
-        
-        /* --- SEÇÃO INTEGRAÇÕES --- */
         #integracoes { overflow: hidden; background-color: var(--cor-fundo-secundario); }
         .logos-container { position: relative; padding: 2rem 0; margin-top: 3rem; -webkit-mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent); mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent); }
         .logos-slide { display: flex; width: fit-content; animation: scroll 60s linear infinite; }
-        
         .logos-slide img {
             height: 45px;
             margin: 0 40px;
@@ -181,8 +292,6 @@
             transform: scale(1.1);
         }
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
-        /* --- SEÇÃO DEPOIMENTOS --- */
         .carousel-container { position: relative; margin-top: 4rem; }
         .carousel-wrapper { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 2rem; padding: 2rem 1rem; scroll-behavior: smooth; }
         .carousel-wrapper::-webkit-scrollbar { display: none; }
@@ -196,12 +305,10 @@
         .carousel-btn:hover { background-color: rgba(255, 255, 255, 0.2); }
         #prev-btn { left: -25px; }
         #next-btn { right: -25px; }
-
-        /* --- SEÇÃO "POR QUE AGORA?" --- */
         #porque-agora .highlight-box { 
             background-image: url('2026.png'); 
             background-size: cover; 
-            background-position: center 25%; /* AJUSTE FINO: Foca a imagem 25% a partir do topo. Altere este valor para enquadrar sua foto. */
+            background-position: center 25%;
             color: #fff; 
             padding: 5rem; 
             border-radius: 30px; 
@@ -220,7 +327,7 @@
             position: absolute; 
             top: 0; left: 0; 
             width: 100%; height: 100%; 
-            background-color: rgba(0, 0, 0, 0.4); /* Adicionado um leve overlay para melhorar a legibilidade do botão */
+            background-color: rgba(0, 0, 0, 0.4);
             z-index: -1; 
         }
         .highlight-box h2, .highlight-box p { position: relative; z-index: 2; }
@@ -231,8 +338,6 @@
             text-shadow: 0px 0px 15px rgba(0, 0, 0, 0.7);
             margin-bottom: 0;
         }
-
-        /* --- BLOCO DE GARANTIA --- */
         #garantia { background-color: var(--cor-fundo-secundario); }
         .garantia-box { display: grid; grid-template-columns: 300px 1fr; gap: 4rem; align-items: center; background-color: #1c1c1e; padding: 4rem; border-radius: 30px; text-align: left; }
         .garantia-seal img { 
@@ -252,7 +357,6 @@
             color: var(--cor-texto-principal);
             transition: color 0.4s ease;
         }
-        
         .garantia-box:hover .garantia-seal img {
             filter: grayscale(0%);
             opacity: 1;
@@ -261,8 +365,6 @@
         .garantia-box:hover .garantia-text strong {
             color: var(--cor-verde);
         }
-
-        /* --- SEÇÃO DE PREÇO --- */
         #preco { padding-bottom: 4rem; }
         .price-card {
             background: linear-gradient(145deg, #1c1c1e, #111111);
@@ -297,8 +399,6 @@
             line-height: 1;
         }
         .price-card .btn { margin-top: 1rem; }
-
-        /* --- SEÇÃO GARANTIA E OBJEÇÕES --- */
         #garantia-objecoes { padding-top: 0; }
         .garantia-objecoes-grid {
             display: grid;
@@ -320,7 +420,7 @@
         .objeccoes-container {
             display: flex;
             flex-direction: column;
-            gap: 1.5rem; /* Reduzido o gap para melhor encaixe */
+            gap: 1.5rem;
         }
         .objeccao-card {
             background-color: var(--cor-fundo-secundario);
@@ -337,8 +437,6 @@
             color: var(--cor-texto-secundario);
             line-height: 1.6;
         }
-
-        /* --- BOTÕES FLUTUANTES --- */
         .floating-buttons { position: fixed; bottom: 20px; right: 20px; z-index: 1000; display: flex; flex-direction: column; gap: 15px; }
         .float-btn { width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(0,0,0,0.3); transition: transform 0.3s ease, background-color 0.3s ease; cursor: pointer; border: none; text-decoration: none; }
         .float-btn:hover { transform: scale(1.1); }
@@ -346,8 +444,6 @@
         #whatsapp-btn { background-color: #25D366; }
         #back-to-top-btn { background-color: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); opacity: 0; pointer-events: none; transform: translateY(20px); transition: opacity 0.3s ease, transform 0.3s ease; }
         #back-to-top-btn.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
-
-        /* --- RODAPÉ --- */
         footer {
             background-color: var(--cor-fundo-secundario);
             color: var(--cor-texto-secundario);
@@ -361,100 +457,80 @@
         .footer-grid a { color: var(--cor-texto-secundario); text-decoration: none; transition: color 0.3s ease; }
         .footer-grid a:hover { color: var(--cor-destaque); }
         .footer-bottom { border-top: 1px solid #333; padding-top: 2rem; text-align: center; }
-
-        /* --- KEYFRAMES DE ANIMAÇÃO --- */
         @keyframes gentle-float {
             0% { transform: translateY(0); }
             50% { transform: translateY(-5px); }
             100% { transform: translateY(0); }
         }
-
-        /* #################### RESPONSIVIDADE #################### */
-        
-        /* --- AJUSTES PARA TABLETS (ATÉ 1024px) --- */
         @media (max-width: 1024px) {
             .depoimento-card { flex: 0 0 47%; max-width: 47%; }
             .feature-section, .feature-section.reverse { 
                 grid-template-columns: 1fr; 
-                gap: 2rem; /* Reduzido o espaço entre imagem e texto */
+                gap: 2rem;
             }
             .feature-section.reverse .feature-image { order: 0; }
             .feature-image { margin-bottom: 2rem; }
             .garantia-box { 
                 grid-template-columns: 1fr; 
                 text-align: center; 
-                gap: 2rem; /* Reduzido o gap */
+                gap: 2rem;
             }
             .garantia-seal { max-width: 200px; margin: 0 auto 2rem auto; }
             .garantia-objecoes-grid { 
                 grid-template-columns: 1fr; 
-                gap: 3rem; /* Reduzido o gap */
+                gap: 3rem;
             }
             .garantia-blindada-seal { max-width: 250px; margin: 0 auto; }
         }
-
-        /* --- AJUSTES FINOS PARA CELULARES (ATÉ 768px) --- */
         @media (max-width: 768px) {
             section { padding: 5rem 0; }
-            .container { padding: 0 1.5rem; } /* Aumentei um pouco o padding para dar mais respiro */
-
-            h2 { font-size: clamp(2rem, 7vw, 2.5rem); } /* Ajuste fino no tamanho dos títulos */
+            .container { padding: 0 1.5rem; }
+            h2 { font-size: clamp(2rem, 7vw, 2.5rem); }
             p.subtitulo { font-size: 1.2rem; }
-
             .header-logo-container {
-                padding: 1.5rem; /* Menos espaçamento em telas menores */
+                padding: 1.5rem;
             }
             .header-logo {
-                max-height: 165px; /* Logo um pouco menor no celular */
+                max-height: 35px;
             }
-
             .title-grid { grid-template-columns: 1fr; gap: 1rem; }
             .vertical-text, .left, .right { display: none; }
-
-            .poder-card { padding: 2rem 1.5rem; } /* Menos padding nos cards */
-
+            .poder-card { padding: 2rem 1.5rem; }
             .feature-text h3 { font-size: 2rem; }
-
-            .depoimento-card { flex: 0 0 90%; max-width: 90%; padding: 2rem; } /* Cards um pouco menores e com menos padding */
+            .depoimento-card { flex: 0 0 90%; max-width: 90%; padding: 2rem; }
             .carousel-wrapper { padding: 1.5rem 0; }
             .carousel-btn { display: none; }
-
-            /* AJUSTE CRÍTICO: Seção "Porque Agora" no celular */
             #porque-agora .highlight-box {
-                min-height: 380px; /* Altura mais adequada para celular */
-                padding: 3rem 1.5rem; /* Padding adaptado */
+                min-height: 380px;
+                padding: 3rem 1.5rem;
                 margin-top: 2rem;
-                background-position: center top; /* AJUSTE FINO PARA CELULAR: Prioriza o topo da imagem em telas verticais. */
+                background-position: center top;
             }
-
-            .garantia-box { padding: 2.5rem 1.5rem; } /* Menos padding na garantia */
-            
+            .garantia-box { padding: 2.5rem 1.5rem; }
             .price-card { padding: 2.5rem 1.5rem; }
-            .price-display .new-price { font-size: clamp(3rem, 12vw, 4rem); } /* Preço um pouco menor */
-
+            .price-display .new-price { font-size: clamp(3rem, 12vw, 4rem); }
             .garantia-objecoes-grid { margin-top: 2.5rem; }
             .objeccao-card { padding: 1.5rem; }
             .footer-grid { text-align: center; }
         }
-
-        /* [CODIGOS] Adicionando um breakpoint para telas ainda menores, garantindo a UX em qualquer dispositivo. */
-        /* --- AJUSTES PARA CELULARES PEQUENOS (ATÉ 480px) --- */
         @media (max-width: 480px) {
-            h1 { font-size: 2.5rem; } /* Reduz o título principal para evitar quebras indesejadas */
+            h1 { font-size: 2.5rem; }
             p.subtitulo { font-size: 1.1rem; }
             .btn {
-                padding: 0.9rem 2rem; /* Botões ligeiramente menores */
+                padding: 0.9rem 2rem;
                 font-size: 1rem;
             }
+            .play-button-overlay { width: 75px; height: 75px; }
+            .play-button-overlay svg { width: 30px; height: 30px; }
             .depoimento-card {
-                flex: 0 0 95%; /* Ocupa quase toda a tela para focar no conteúdo */
+                flex: 0 0 95%;
                 max-width: 95%;
             }
             .price-display {
-                gap: 1rem; /* Menor espaçamento entre os preços */
+                gap: 1rem;
             }
             .price-display .new-price {
-                font-size: clamp(3rem, 15vw, 3.5rem); /* Ajuste fino no preço para telas bem pequenas */
+                font-size: clamp(3rem, 15vw, 3.5rem);
             }
             .floating-buttons {
                 bottom: 15px;
@@ -470,15 +546,16 @@
 <body>
 
     <header id="hero">
-        <div class="header-logo-container">
-            <a href="#hero">
-                <img src="logon8n.png" alt="Logo da Sua Empresa" class="header-logo">
-            </a>
-        </div>
-
         <video id="video-background" autoplay muted loop playsinline poster="https://images.pexels.com/photos/3401402/pexels-photo-3401402.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
             <source src="n8n.mp4" type="video/mp4">
         </video>
+
+        <div class="header-logo-container">
+            <a href="#hero">
+                <img src="seu-logo-branco.png" alt="Logo da Sua Empresa" class="header-logo">
+            </a>
+        </div>
+        
         <div class="hero-content container">
             <div class="title-grid">
                 <span class="vertical-text left animate-on-scroll">A MUDANÇA</span>
@@ -516,6 +593,20 @@
             </div>
         </section>
 
+        <section id="video-demonstracao">
+            <div class="container">
+                <h2 class="animate-on-scroll">Veja em Ação.</h2>
+                <p class="subtitulo animate-on-scroll" style="transition-delay: 0.1s;">Uma pequena amostra do poder que você terá em suas mãos. Visualize os processos ganhando vida.</p>
+
+                <div class="video-showcase animate-on-scroll" style="transition-delay: 0.2s;" id="play-demo-video-btn">
+                    <img src="https://i.pinimg.com/736x/73/68/ec/7368ec39301e434e5fd85f0830bd7ee5.jpg" alt="Demonstração da automação" class="video-showcase-poster">
+                    <div class="play-button-overlay">
+                        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M6.3 21.7C5.2 22.4 3.8 21.7 3.8 20.4V3.6C3.8 2.3 5.2 1.6 6.3 2.3L20.4 11.7C21.4 12.4 21.4 13.6 20.4 14.3L6.3 21.7Z"></path></svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="importancia">
             <div class="container">
                 <div class="feature-section">
@@ -543,7 +634,6 @@
                 </div>
             </div>
         </section>
-
         <section id="construtor">
             <div class="container">
                 <div class="feature-section">
@@ -557,7 +647,6 @@
                 </div>
             </div>
         </section>
-        
         <section id="privacidade" style="background-color: var(--cor-fundo-secundario);">
             <div class="container">
                 <div class="feature-section reverse">
@@ -571,7 +660,6 @@
                 </div>
             </div>
         </section>
-
         <section id="customizacao">
             <div class="container">
                 <div class="feature-section">
@@ -585,7 +673,6 @@
                 </div>
             </div>
         </section>
-
         <section id="receita" style="background-color: var(--cor-fundo-secundario);">
             <div class="container">
                 <div class="feature-section reverse">
@@ -599,43 +686,17 @@
                 </div>
             </div>
         </section>
-
         <section id="integracoes">
             <div class="container">
                 <h2 class="animate-on-scroll">Seu exército de integrações</h2>
                 <p class="subtitulo animate-on-scroll" style="transition-delay: 0.1s;">Conecte as ferramentas que o mundo dos negócios já ama e usa.</p>
                 <div class="logos-container">
                     <div class="logos-slide">
-                        <img src="https://cdn.worldvectorlogo.com/logos/whatsapp-3.svg" alt="WhatsApp">
-                        <img src="instagram.png" alt="Instagram">
-                        <img src="8 (1).png" alt="Google Sheets">
-                        <img src="https://cdn.worldvectorlogo.com/logos/slack-new-logo.svg" alt="Slack">
-                        <img src="gmail.png" alt="gmail">
-                        <img src="meta.png" alt="Meta Ads">
-                        <img src="https://cdn.worldvectorlogo.com/logos/trello.svg" alt="Trello">
-                        <img src="https://cdn.worldvectorlogo.com/logos/stripe-4.svg" alt="Stripe">
-                        <img src="https://cdn.worldvectorlogo.com/logos/openai-2.svg" alt="ChatGPT">
-                        <img src="calendar.png" alt="calendar">
-                        <img src="drive.png" alt="drive">
-                        <img src="https://cdn.worldvectorlogo.com/logos/telegram-1.svg" alt="Telegram">
-
-                        <img src="https://cdn.worldvectorlogo.com/logos/whatsapp-3.svg" alt="WhatsApp">
-                        <img src="instagram.png" alt="Instagram">
-                        <img src="8 (1).png" alt="Google Sheets">
-                        <img src="https://cdn.worldvectorlogo.com/logos/slack-new-logo.svg" alt="Slack">
-                        <img src="gmail.png" alt="gmail">
-                        <img src="meta.png" alt="Meta Ads">
-                        <img src="https://cdn.worldvectorlogo.com/logos/trello.svg" alt="Trello">
-                        <img src="https://cdn.worldvectorlogo.com/logos/stripe-4.svg" alt="Stripe">
-                        <img src="https://cdn.worldvectorlogo.com/logos/openai-2.svg" alt="ChatGPT">
-                        <img src="calendar.png" alt="calendar">
-                        <img src="drive.png" alt="drive">
-                        <img src="https://cdn.worldvectorlogo.com/logos/telegram-1.svg" alt="Telegram">
+                        <img src="https://cdn.worldvectorlogo.com/logos/whatsapp-3.svg" alt="WhatsApp"><img src="instagram.png" alt="Instagram"><img src="8 (1).png" alt="Google Sheets"><img src="https://cdn.worldvectorlogo.com/logos/slack-new-logo.svg" alt="Slack"><img src="gmail.png" alt="gmail"><img src="meta.png" alt="Meta Ads"><img src="https://cdn.worldvectorlogo.com/logos/trello.svg" alt="Trello"><img src="https://cdn.worldvectorlogo.com/logos/stripe-4.svg" alt="Stripe"><img src="https://cdn.worldvectorlogo.com/logos/openai-2.svg" alt="ChatGPT"><img src="calendar.png" alt="calendar"><img src="drive.png" alt="drive"><img src="https://cdn.worldvectorlogo.com/logos/telegram-1.svg" alt="Telegram"><img src="https://cdn.worldvectorlogo.com/logos/whatsapp-3.svg" alt="WhatsApp"><img src="instagram.png" alt="Instagram"><img src="8 (1).png" alt="Google Sheets"><img src="https://cdn.worldvectorlogo.com/logos/slack-new-logo.svg" alt="Slack"><img src="gmail.png" alt="gmail"><img src="meta.png" alt="Meta Ads"><img src="https://cdn.worldvectorlogo.com/logos/trello.svg" alt="Trello"><img src="https://cdn.worldvectorlogo.com/logos/stripe-4.svg" alt="Stripe"><img src="https://cdn.worldvectorlogo.com/logos/openai-2.svg" alt="ChatGPT"><img src="calendar.png" alt="calendar"><img src="drive.png" alt="drive"><img src="https://cdn.worldvectorlogo.com/logos/telegram-1.svg" alt="Telegram">
                     </div>
                 </div>
             </div>
         </section>
-        
         <section id="depoimentos">
             <div class="container">
                 <h2 class="animate-on-scroll">Outros heróis que já estão no campo de batalha.</h2>
@@ -660,7 +721,6 @@
                 </div>
             </div>
         </section>
-
         <section id="porque-agora">
             <div class="container">
                 <h2 class="animate-on-scroll">
@@ -670,13 +730,11 @@
                     Haverá os 99% que estarão distraídos com eleições, Carnaval e Copa do Mundo, presos na inércia, esperando o "momento perfeito".<br>
                     E haverá o 1% que usou 2025 para construir a base. Que se preparou enquanto todos procrastinavam. Que chegará em 2026 não para começar, mas para acelerar.
                 </p>
-
                 <div class="highlight-box animate-on-scroll" style="transition-delay: 0.2s;">
                     <a href="https://www.instagram.com/a_provados/" target="_blank" class="btn">A escolha é feita hoje.</a>
                 </div>
             </div>
         </section>
-        
         <section id="garantia">
             <div class="container">
                 <div class="garantia-box animate-on-scroll">
@@ -691,7 +749,6 @@
                 </div>
             </div>
         </section>
-
         <section id="garantia-satisfacao" style="padding-top: 0; background-color: var(--cor-fundo-secundario);">
             <div class="container">
                 <div class="garantia-box animate-on-scroll">
@@ -706,7 +763,6 @@
                 </div>
             </div>
         </section>
-
         <section id="preco">
             <div class="container">
                 <div class="price-card animate-on-scroll">
@@ -721,7 +777,6 @@
                 </div>
             </div>
         </section>
-
         <section id="garantia-objecoes" style="background-color: var(--cor-fundo-secundario);">
             <div class="container">
                 <h2 class="animate-on-scroll">Ainda em dúvida? Vamos resolver isso.</h2>
@@ -747,7 +802,6 @@
                 </div>
             </div>
         </section>
-
         <section id="cta">
             <div class="container">
                 <h2 class="animate-on-scroll">De espectador a protagonista da sua realidade financeira.</h2>
@@ -768,36 +822,10 @@
     <footer>
         <div class="container">
             <div class="footer-grid">
-                <div>
-                    <h4>Operação 2026</h4>
-                    <ul>
-                        <li><a href="#hero">Início</a></li>
-                        <li><a href="#cta">Inscreva-se</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4>O Curso</h4>
-                    <ul>
-                        <li><a href="#poder">O Poder do n8n</a></li>
-                        <li><a href="#importancia">A Importância</a></li>
-                        <li><a href="#beneficios">Benefícios</a></li>
-                        <li><a href="#construtor">Construtor Visual</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4>Prova Social</h4>
-                    <ul>
-                        <li><a href="#depoimentos">Depoimentos</a></li>
-                        <li><a href="#garantia">Garantia</a></li>
-                        <li><a href="#garantia-objecoes">Dúvidas</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4>O Momento</h4>
-                    <ul>
-                        <li><a href="#porque-agora">Por Que Agora?</a></li>
-                    </ul>
-                </div>
+                <div><h4>Operação 2026</h4><ul><li><a href="#hero">Início</a></li><li><a href="#cta">Inscreva-se</a></li></ul></div>
+                <div><h4>O Curso</h4><ul><li><a href="#poder">O Poder do n8n</a></li><li><a href="#importancia">A Importância</a></li><li><a href="#beneficios">Benefícios</a></li><li><a href="#construtor">Construtor Visual</a></li></ul></div>
+                <div><h4>Prova Social</h4><ul><li><a href="#depoimentos">Depoimentos</a></li><li><a href="#garantia">Garantia</a></li><li><a href="#garantia-objecoes">Dúvidas</a></li></ul></div>
+                <div><h4>O Momento</h4><ul><li><a href="#porque-agora">Por Que Agora?</a></li></ul></div>
             </div>
             <div class="footer-bottom">
                 <p>Copyright © 2025-2026 Operação 2026. Todos os direitos reservados.</p>
@@ -805,8 +833,22 @@
         </div>
     </footer>
 
+    <div class="video-modal" id="video-modal">
+        <div class="video-modal-content">
+            <button class="close-modal-btn" id="close-modal-btn" aria-label="Fechar vídeo">&times;</button>
+            
+            <video id="modal-video-local" loop playsinline controls style="display: none;">
+                <source src="n8n.mp4" type="video/mp4">
+            </video>
+            
+            <iframe id="modal-video-youtube" src="https://www.youtube.com/embed/ID_DO_SEU_VIDEO?enablejsapi=1" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="display: none;"></iframe>
+
+        </div>
+    </div>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            // Script de Animação de Scroll
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) entry.target.classList.add('is-visible');
@@ -814,26 +856,26 @@
             }, { threshold: 0.1 });
             document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 
+            // Script do Botão "Voltar ao Topo"
             const backToTopButton = document.getElementById('back-to-top-btn');
             window.addEventListener('scroll', () => {
                 backToTopButton.classList.toggle('visible', window.scrollY > 300);
             });
 
+            // Script do Carrossel de Depoimentos
             const carouselWrapper = document.getElementById('carousel-wrapper');
             if(carouselWrapper) {
                 const prevBtn = document.getElementById('prev-btn');
                 const nextBtn = document.getElementById('next-btn');
                 let autoScrollInterval;
-
                 const getScrollAmount = () => {
                     const card = carouselWrapper.querySelector('.depoimento-card');
-                    if (!card) return 300; // Fallback
+                    if (!card) return 300;
                     const gap = parseInt(window.getComputedStyle(carouselWrapper).gap);
                     return card.offsetWidth + gap;
                 };
-
                 const scrollNext = () => {
-                    if (carouselWrapper.scrollLeft + carouselWrapper.clientWidth >= carouselWrapper.scrollWidth - 1) { 
+                    if (carouselWrapper.scrollLeft + carouselWrapper.clientWidth >= carouselWrapper.scrollWidth - 1) {
                         carouselWrapper.scrollTo({ left: 0, behavior: 'smooth' });
                     } else {
                         carouselWrapper.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
@@ -848,15 +890,68 @@
                 };
                 const startAutoScroll = () => { autoScrollInterval = setInterval(scrollNext, 4000); };
                 const stopAutoScroll = () => { clearInterval(autoScrollInterval); };
-
                 nextBtn.addEventListener('click', () => { stopAutoScroll(); scrollNext(); startAutoScroll(); });
                 prevBtn.addEventListener('click', () => { stopAutoScroll(); scrollPrev(); startAutoScroll(); });
                 carouselWrapper.addEventListener('mouseenter', stopAutoScroll);
                 carouselWrapper.addEventListener('mouseleave', startAutoScroll);
-                
                 startAutoScroll();
+            }
+
+            // [CODIGOS] LÓGICA PARA O VÍDEO LIGHTBOX DA SEÇÃO DEMONSTRAÇÃO
+            const playDemoBtn = document.getElementById('play-demo-video-btn');
+            const videoModal = document.getElementById('video-modal');
+            const closeModalBtn = document.getElementById('close-modal-btn');
+            
+            // **IMPORTANTE**: Defina aqui qual tipo de vídeo você quer usar no modal.
+            // Mude para 'youtube' se for usar o iframe.
+            const videoTypeToUse = 'local'; // ou 'youtube'
+
+            const modalVideoLocal = document.getElementById('modal-video-local');
+            const modalVideoYoutube = document.getElementById('modal-video-youtube');
+            const youtubeOriginalSrc = modalVideoYoutube ? modalVideoYoutube.src : '';
+
+            function openModal() {
+                if(videoTypeToUse === 'local' && modalVideoLocal) {
+                    modalVideoLocal.style.display = 'block';
+                    modalVideoYoutube.style.display = 'none';
+                    modalVideoLocal.currentTime = 0;
+                    modalVideoLocal.play();
+                } else if (videoTypeToUse === 'youtube' && modalVideoYoutube) {
+                    modalVideoLocal.style.display = 'none';
+                    modalVideoYoutube.style.display = 'block';
+                    modalVideoYoutube.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+                }
+                videoModal.classList.add('active');
+            }
+
+            function closeModal() {
+                videoModal.classList.remove('active');
+                if (modalVideoLocal) {
+                    modalVideoLocal.pause();
+                }
+                if (modalVideoYoutube) {
+                    // Pausa o vídeo do YouTube de forma segura
+                    modalVideoYoutube.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+                }
+            }
+
+            if (playDemoBtn) {
+                playDemoBtn.addEventListener('click', openModal);
+            }
+            
+            if (closeModalBtn) {
+                closeModalBtn.addEventListener('click', closeModal);
+            }
+
+            if (videoModal) {
+                videoModal.addEventListener('click', function(event) {
+                    if (event.target === videoModal) {
+                        closeModal();
+                    }
+                });
             }
         });
     </script>
+
 </body>
 </html>
