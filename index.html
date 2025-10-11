@@ -130,6 +130,7 @@
             transform: translate(-50%, -50%);
             z-index: 1;
             opacity: 0.25;
+            border: none;
         }
 
         /* Estilo específico para o iframe de fundo para cobrir a tela e não ser clicável */
@@ -666,7 +667,9 @@
 <body>
 
     <header id="hero">
-        <iframe id="iframe-background" src="" frameborder="0" allow="autoplay; encrypted-media;" allowfullscreen></iframe>
+        <div id="iframe-background-container" style="width:100%; height:100%; position:absolute;">
+             <iframe id="iframe-background" src="" frameborder="0" allow="autoplay; encrypted-media;" allowfullscreen></iframe>
+        </div>
         <video id="video-background" autoplay muted loop playsinline poster="https://images.pexels.com/photos/3401402/pexels-photo-3401402.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"></video>
 
         <div class="header-logo-container">
@@ -816,7 +819,7 @@
     <div class="video-modal" id="video-modal">
         <div class="video-modal-content">
             <button class="close-modal-btn" id="close-modal-btn" aria-label="Fechar vídeo">&times;</button>
-            <video id="modal-video-local" autoplay muted loop playsinline controls style="display: none;"></video>
+            <video id="modal-video-local" autoplay loop playsinline controls style="display: none;"></video>
             <iframe id="modal-video-youtube" src="" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="display: none;"></iframe>
         </div>
     </div>
@@ -824,24 +827,60 @@
     <script>
         // =================================================================================
         // --- [CODIGOS] PAINEL DE CONTROLE DA PÁGINA ---
-        // Altere as configurações abaixo para personalizar o conteúdo dinâmico.
+        // Altere as configurações abaixo. O sistema identificará o tipo de vídeo
+        // (YouTube, Google Drive, local, etc.) automaticamente.
         // =================================================================================
         const pageConfig = {
             n8nWebhookUrl: 'https://substitua-pela-url-do-seu-webhook.com/webhook/1',
 
             headerVideo: {
-                type: 'youtube', // AGORA ACEITA 'youtube', 'local', 'url'
-                src: 'https://www.youtube.com/embed/jmJY2IK7OGs?si=TZIsNNW8kaMftxMZ' // Ex: pode ser qualquer link do YouTube
+                // Cole qualquer link do YouTube, Google Drive, ou caminho local. Ex:
+                // YouTube: 'https://www.youtube.com/watch?v=jmJY2IK7OGs'
+                // G-Drive: 'https://drive.google.com/file/d/1GVDVkNCX8uCdxZTZ41sxfpj16aDXPeLq/view?usp=drive_link'
+                // Local:   'videos/meu_video_de_fundo.mp4'
+                src: 'https://www.youtube.com/watch?v=jmJY2IK7OGs' 
             },
 
             demoVideo: {
-                type: 'youtube', // Aceita 'youtube', 'local', 'url'
-                src: 'https://www.youtube.com/embed/gwbasDmCDp0' // Ex: pode ser o link de embed
+                // Cole qualquer link do YouTube, Google Drive, ou caminho local. Ex:
+                src: 'https://www.youtube.com/watch?v=gwbasDmCDp0' 
             }
         };
         // =================================================================================
         // --- FIM DO PAINEL DE CONTROLE ---
         // =================================================================================
+
+        // --- [CODIGOS] FUNÇÃO UNIVERSAL PARA PROCESSAR VÍDEOS ---
+        // Esta função identifica o tipo de link (YouTube, Google Drive, local/direto)
+        // e retorna o tipo de player e o URL de embed apropriado.
+        function getVideoEmbedUrl(url) {
+            if (!url) return null;
+
+            // Padrão para YouTube
+            const youtubeRegex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/;
+            const youtubeMatch = url.match(youtubeRegex);
+            if (youtubeMatch) {
+                const videoId = youtubeMatch[1];
+                return { type: 'iframe', src: `https://www.youtube.com/embed/${videoId}?playlist=${videoId}&loop=1&rel=0&iv_load_policy=3&showinfo=0&modestbranding=1&controls=0` };
+            }
+            
+            // Padrão para Google Drive
+            const gdriveRegex = /drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/;
+            const gdriveMatch = url.match(gdriveRegex);
+            if (gdriveMatch) {
+                const fileId = gdriveMatch[1];
+                return { type: 'iframe', src: `https://drive.google.com/file/d/${fileId}/preview` };
+            }
+            
+            // Padrão para vídeos locais ou links diretos
+            if (url.match(/\.(mp4|webm|ogg)$/i) || !url.startsWith('http')) {
+                return { type: 'video', src: url };
+            }
+
+            // Se nenhum padrão corresponder, assume que pode ser um link de embed genérico
+            console.warn("Tipo de URL de vídeo não reconhecido, tentando usar como iframe genérico:", url);
+            return { type: 'iframe', src: url };
+        }
 
         async function sendToWebhook(data) {
             const webhookUrl = pageConfig.n8nWebhookUrl;
@@ -867,36 +906,29 @@
 
         document.addEventListener("DOMContentLoaded", function() {
             
+            // --- [CODIGOS] LÓGICA ATUALIZADA DO VÍDEO DO CABEÇALHO ---
             function setupPage() {
-                const headerVideo = document.getElementById('video-background');
-                const headerIframe = document.getElementById('iframe-background');
-                const config = pageConfig.headerVideo;
+                const headerVideoEl = document.getElementById('video-background');
+                const headerIframeEl = document.getElementById('iframe-background');
+                const configSrc = pageConfig.headerVideo.src;
 
-                if (config && config.src) {
-                    if (config.type === 'youtube') {
-                        headerVideo.style.display = 'none';
-                        headerIframe.style.display = 'block';
+                headerVideoEl.style.display = 'none';
+                headerIframeEl.style.display = 'none';
 
-                        const getYouTubeID = (url) => {
-                            const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/;
-                            const match = url.match(regex);
-                            return match ? match[1] : null;
-                        };
-                        
-                        const videoId = getYouTubeID(config.src);
-                        if (videoId) {
-                            const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${videoId}&showinfo=0&modestbranding=1&rel=0&iv_load_policy=3`;
-                            headerIframe.src = embedUrl;
-                        } else {
-                            console.error("URL do YouTube inválida para o cabeçalho:", config.src);
-                            headerIframe.style.display = 'none';
+                if (configSrc) {
+                    const videoData = getVideoEmbedUrl(configSrc);
+                    if (videoData) {
+                        if (videoData.type === 'iframe') {
+                            headerIframeEl.src = `${videoData.src}&autoplay=1&mute=1`; // Garante mudo
+                            headerIframeEl.style.display = 'block';
+                        } else { // type 'video'
+                            headerVideoEl.innerHTML = `<source src="${videoData.src}" type="video/mp4">`;
+                            headerVideoEl.load();
+                            headerVideoEl.play().catch(e => console.error("Header video autoplay failed:", e));
+                            headerVideoEl.style.display = 'block';
                         }
-
-                    } else if (config.type === 'local' || config.type === 'url') {
-                        headerIframe.style.display = 'none';
-                        headerVideo.style.display = 'block';
-                        headerVideo.innerHTML = `<source src="${config.src}" type="video/mp4">`;
-                        headerVideo.load();
+                    } else {
+                         console.error("Não foi possível processar a URL do vídeo do cabeçalho:", configSrc);
                     }
                 }
                 
@@ -962,34 +994,34 @@
             const modalVideoLocal = document.getElementById('modal-video-local');
             const modalVideoYoutube = document.getElementById('modal-video-youtube');
 
+            // --- [CODIGOS] LÓGICA ATUALIZADA DO VÍDEO DE DEMONSTRAÇÃO (MODAL) ---
             function openModal() {
-                const videoType = pageConfig.demoVideo.type;
                 const videoSrc = pageConfig.demoVideo.src;
                 if (!videoSrc) {
                     console.error('Fonte do vídeo de demonstração não definida.');
                     return;
                 }
+
                 modalVideoLocal.style.display = 'none';
                 modalVideoYoutube.style.display = 'none';
-                if ((videoType === 'local' || videoType === 'url') && modalVideoLocal) {
-                    modalVideoLocal.src = videoSrc;
-                    modalVideoLocal.style.display = 'block';
-                    modalVideoLocal.currentTime = 0;
-                    modalVideoLocal.play().catch(e => console.error("Erro autoplay local:", e));
-                } else if (videoType === 'youtube' && modalVideoYoutube) {
-                    try {
-                        const url = new URL(videoSrc);
-                        url.searchParams.set('autoplay', '1');
-                        url.searchParams.set('mute', '1');
-                        url.searchParams.set('enablejsapi', '1');
-                        modalVideoYoutube.src = url.toString();
-                    } catch (e) {
-                        console.error("URL do YouTube inválida para o modal:", videoSrc, e);
-                        modalVideoYoutube.src = videoSrc;
+
+                const videoData = getVideoEmbedUrl(videoSrc);
+                
+                if (videoData) {
+                    if (videoData.type === 'iframe') {
+                        modalVideoYoutube.src = `${videoData.src}?autoplay=1&rel=0`; // Habilita som
+                        modalVideoYoutube.style.display = 'block';
+                    } else { // type 'video'
+                        modalVideoLocal.src = videoData.src;
+                        modalVideoLocal.muted = false; // Garante que o som está ativo
+                        modalVideoLocal.style.display = 'block';
+                        modalVideoLocal.currentTime = 0;
+                        modalVideoLocal.play().catch(e => console.error("Erro ao tentar tocar vídeo no modal:", e));
                     }
-                    modalVideoYoutube.style.display = 'block';
+                    videoModal.classList.add('active');
+                } else {
+                    console.error("Não foi possível processar a URL do vídeo de demonstração:", videoSrc);
                 }
-                videoModal.classList.add('active');
             }
 
             function closeModal() {
@@ -999,6 +1031,7 @@
                     modalVideoLocal.src = '';
                 }
                 if (modalVideoYoutube) {
+                    // Pausa o vídeo e limpa o src para parar o carregamento
                     modalVideoYoutube.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
                     setTimeout(() => {
                         modalVideoYoutube.src = '';
