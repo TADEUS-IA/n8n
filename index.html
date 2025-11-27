@@ -448,21 +448,52 @@
             .creator-image-wrapper { max-width: 350px; margin: 0 auto; }
             .creator-text-content { text-align: left; }
         }
-        @media (max-width: 768px) {
+       @media (max-width: 768px) {
+            /* Ajuste geral das seções */
             section { padding: 5rem 0; }
             .container { padding: 0 1.5rem; }
+            
+            /* Tipografia mobile */
             h2 { font-size: clamp(2rem, 7vw, 2.5rem); }
             p.subtitulo { font-size: 1.2rem; }
-            .header-logo-container { padding: 1.5rem; }
-            .header-logo { max-height: 165px; }
+
+            /* --- [CODIGOS] CORREÇÃO DO CABEÇALHO MOBILE --- */
+            .header-logo-container {
+                padding: 1.5rem;
+                /* Garante que o container da logo não ocupe espaço demais */
+                position: absolute;
+                top: 0;
+                width: 100%;
+            }
+
+            .header-logo {
+                /* Reduz o tamanho da logo no celular para ficar harmônico */
+                max-height: 80px; /* Era 165px, 80px é ideal para mobile */
+            }
+
+            .hero-content {
+                /* Adiciona espaço extra no topo para o texto não colar na logo */
+                padding-top: 120px; 
+            }
+            /* ----------------------------------------------- */
+
             .title-grid { grid-template-columns: 1fr; gap: 1rem; }
             .vertical-text, .left, .right { display: none; }
+            
+            /* Ajustes dos cards e outros elementos */
             .poder-card { padding: 2rem 1.5rem; }
             .feature-text h3 { font-size: 2rem; }
             .depoimento-card { flex: 0 0 90%; max-width: 90%; padding: 2rem; }
             .carousel-wrapper { padding: 1.5rem 0; }
             .carousel-btn { display: none; }
-            #porque-agora .highlight-box { min-height: 380px; padding: 3rem 1.5rem; margin-top: 2rem; background-position: center top; }
+            
+            #porque-agora .highlight-box { 
+                min-height: 380px; 
+                padding: 3rem 1.5rem; 
+                margin-top: 2rem; 
+                background-position: center top; 
+            }
+            
             .garantia-box { padding: 2.5rem 1.5rem; }
             .price-card { padding: 2.5rem 1.5rem; }
             .price-display .new-price { font-size: clamp(3rem, 12vw, 4rem); }
@@ -471,6 +502,7 @@
             .footer-grid { text-align: center; }
             .vision-card { height: 350px; }
             .vision-footer-desc { font-size: 1.1rem; }
+        
         }
         @media (max-width: 480px) {
             h1 { font-size: 2.5rem; }
