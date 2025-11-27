@@ -11,7 +11,6 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-XXXXXXXXXX');
     </script>
     <script>
@@ -29,8 +28,9 @@
     <noscript><img height="1" width="1" style="display:none"
       src="https://www.facebook.com/tr?id=SEU_ID_DO_PIXEL_AQUI&ev=PageView&noscript=1"
     /></noscript>
+
     <style>
-        /* --- CONFIGURAÇÕES GLOBAIS E VARIÁVEIS (FILOSOFIA APPLE) --- */
+        /* --- CONFIGURAÇÕES GLOBAIS E VARIÁVEIS --- */
         :root {
             --cor-fundo: #000000;
             --cor-fundo-secundario: #111111;
@@ -40,12 +40,11 @@
             --cor-destaque-hover: #0077ed;
             --cor-verde: #34c759;
             --cor-vermelho-riscado: #ff4d4d;
-            --cor-verde-fluorescente: #00FF7F; /* SpringGreen: vibrante e com ótima legibilidade */
+            --cor-verde-fluorescente: #00FF7F;
             --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         html { scroll-behavior: smooth; }
 
         body {
@@ -69,11 +68,11 @@
         }
 
         h1, h2, h3 { font-weight: 600; }
-
         h1 { font-size: clamp(3rem, 6vw, 5rem); letter-spacing: -0.02em; }
         h2 { font-size: clamp(2.5rem, 5vw, 3.5rem); letter-spacing: -0.01em; margin-bottom: 1.5rem; }
         p.subtitulo { font-size: 1.5rem; color: var(--cor-texto-secundario); max-width: 700px; margin: 1.5rem auto 2.5rem auto; line-height: 1.6; }
 
+        /* --- BOTÕES --- */
         .btn {
             display: inline-block;
             background-color: var(--cor-destaque);
@@ -100,7 +99,7 @@
             transition: transform 0.1s ease, background-color 0.1s ease;
         }
 
-        /* Animação de entrada */
+        /* --- ANIMAÇÕES --- */
         .animate-on-scroll {
             opacity: 0;
             transform: translateY(40px);
@@ -111,12 +110,16 @@
             transform: translateY(0);
         }
 
-        /* --- [CODIGOS] ESTILOS PARA O LOGO NO CABEÇALHO --- */
+        @keyframes gentle-float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0); }
+        }
+
+        /* --- HEADER & HERO --- */
         .header-logo-container {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
+            top: 0; left: 0; width: 100%;
             padding: 2rem;
             z-index: 10;
             text-align: right;
@@ -128,12 +131,8 @@
             opacity: 0.9;
             transition: opacity 0.3s ease;
         }
+        .header-logo:hover { opacity: 1; }
 
-        .header-logo:hover {
-            opacity: 1;
-        }
-
-        /* --- HEADER --- */
         #hero {
             height: 100vh;
             display: flex;
@@ -141,15 +140,13 @@
             justify-content: center;
             position: relative;
             padding: 0;
-            overflow: hidden; /* Garante que o iframe não vaze */
+            overflow: hidden;
         }
 
         #video-background, #iframe-background {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 100%;
-            height: 100%;
+            top: 50%; left: 50%;
+            width: 100%; height: 100%;
             object-fit: cover;
             transform: translate(-50%, -50%);
             z-index: 1;
@@ -157,74 +154,12 @@
             border: none;
         }
 
-        /* Estilo específico para o iframe de fundo para cobrir a tela e não ser clicável */
         #iframe-background {
             width: 100vw;
-            height: 56.25vw; /* 16:9 Aspect Ratio */
+            height: 56.25vw;
             min-height: 100vh;
-            min-width: 177.77vh; /* 16:9 Aspect Ratio */
-            pointer-events: none; /* Impede cliques no vídeo de fundo */
-        }
-        
-        /* --- [CODIGOS] ESTILOS PARA VÍDEO LIGHTBOX --- */
-        .video-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.85);
-            z-index: 2000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
+            min-width: 177.77vh;
             pointer-events: none;
-            transition: opacity 0.4s ease;
-        }
-
-        .video-modal.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .video-modal-content {
-            position: relative;
-            width: 90%;
-            max-width: 1100px;
-            aspect-ratio: 16 / 9;
-            transform: scale(0.8);
-            transition: transform 0.4s ease;
-        }
-
-        .video-modal.active .video-modal-content {
-            transform: scale(1);
-        }
-
-        .video-modal video,
-        .video-modal iframe {
-            width: 100%;
-            height: 100%;
-            border-radius: 15px;
-            border: none;
-        }
-
-        .close-modal-btn {
-            position: absolute;
-            top: -40px;
-            right: 0px;
-            background: transparent;
-            border: none;
-            color: #fff;
-            font-size: 3rem;
-            font-weight: 300;
-            cursor: pointer;
-            line-height: 1;
-            transition: transform 0.3s ease;
-        }
-
-        .close-modal-btn:hover {
-            transform: scale(1.2);
         }
 
         .hero-content { position: relative; z-index: 2; width: 100%; }
@@ -234,119 +169,98 @@
         .right { text-align: right; }
         .main-title { display: flex; flex-direction: column; gap: 1.5rem; }
 
-        /* --- SEÇÃO PODER --- */
+        /* --- VÍDEO LIGHTBOX --- */
+        .video-modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+        .video-modal.active { opacity: 1; pointer-events: auto; }
+        .video-modal-content {
+            position: relative;
+            width: 90%; max-width: 1100px;
+            aspect-ratio: 16 / 9;
+            transform: scale(0.8);
+            transition: transform 0.4s ease;
+        }
+        .video-modal.active .video-modal-content { transform: scale(1); }
+        .video-modal video, .video-modal iframe { width: 100%; height: 100%; border-radius: 15px; border: none; }
+        .close-modal-btn {
+            position: absolute; top: -40px; right: 0px;
+            background: transparent; border: none;
+            color: #fff; font-size: 3rem; font-weight: 300;
+            cursor: pointer; line-height: 1;
+            transition: transform 0.3s ease;
+        }
+        .close-modal-btn:hover { transform: scale(1.2); }
+
+        /* --- SEÇÕES GERAIS --- */
         #poder { background-color: var(--cor-fundo-secundario); padding-bottom: 0; }
         .poder-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 4rem; text-align: left; }
         .poder-card { background-color: #1c1c1e; padding: 2.5rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); }
         .poder-card h3 { font-size: 1.5rem; color: var(--cor-verde); margin-bottom: 1rem; }
         .poder-card p { color: var(--cor-texto-secundario); line-height: 1.7; }
-        
-        /* --- [CODIGOS] SEÇÃO VÍDEO DEMONSTRAÇÃO INTERATIVO --- */
-        #video-demonstracao {
-            background-color: var(--cor-fundo-secundario);
-        }
+
+        /* --- VIDEO DEMONSTRAÇÃO --- */
+        #video-demonstracao { background-color: var(--cor-fundo-secundario); }
         .video-showcase {
-            position: relative;
-            width: 100%;
-            max-width: 900px;
-            margin: 3rem auto 0 auto;
-            border-radius: 20px;
-            overflow: hidden;
-            background-color: #000;
+            position: relative; width: 100%; max-width: 900px;
+            margin: 3rem auto 0 auto; border-radius: 20px;
+            overflow: hidden; background-color: #000;
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
             border: 1px solid rgba(255, 255, 255, 0.1);
             cursor: pointer;
         }
-        .video-showcase-poster {
-            display: block;
-            width: 100%;
-            height: auto;
-            opacity: 0.6;
-            transition: opacity 0.4s ease, transform 0.4s ease;
-        }
-        .video-showcase:hover .video-showcase-poster {
-            opacity: 0.4;
-            transform: scale(1.05);
-        }
+        .video-showcase-poster { display: block; width: 100%; height: auto; opacity: 0.6; transition: opacity 0.4s ease, transform 0.4s ease; }
+        .video-showcase:hover .video-showcase-poster { opacity: 0.4; transform: scale(1.05); }
         .play-button-overlay {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 90px;
-            height: 90px;
-            background-color: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #fff;
-            transition: all 0.3s ease;
-            pointer-events: none; /* O clique será no container pai */
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 90px; height: 90px;
+            background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.2); color: #fff;
+            transition: all 0.3s ease; pointer-events: none;
         }
-        .video-showcase:hover .play-button-overlay {
-            transform: translate(-50%, -50%) scale(1.1);
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-        .play-button-overlay svg {
-            width: 40px;
-            height: 40px;
-            margin-left: 5px; /* Ajuste visual para o ícone de play */
-        }
-        
-        .feature-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-            text-align: left;
-        }
+        .video-showcase:hover .play-button-overlay { transform: translate(-50%, -50%) scale(1.1); background-color: rgba(255, 255, 255, 0.2); }
+        .play-button-overlay svg { width: 40px; height: 40px; margin-left: 5px; }
+
+        /* --- FEATURE SECTIONS --- */
+        .feature-section { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; text-align: left; }
         .feature-section.reverse { grid-template-columns: 1fr 1fr; }
         .feature-section.reverse .feature-image { order: 2; }
         .feature-image img { width: 100%; height: auto; border-radius: 30px; display: block; }
         .feature-text h3 { font-size: 2.5rem; margin-bottom: 1rem; }
         .feature-text p { color: var(--cor-texto-secundario); font-size: 1.2rem; line-height: 1.7; }
-        #beneficios .feature-text p strong {
-            color: var(--cor-verde);
-            font-weight: 600;
-        }
-        
+        #beneficios .feature-text p strong { color: var(--cor-verde); font-weight: 600; }
+
+        /* --- INTEGRAÇÕES (LOGOS) --- */
         #integracoes { overflow: hidden; background-color: var(--cor-fundo-secundario); }
         .logos-container { 
-            position: relative; 
-            padding: 2rem 0; 
-            margin-top: 3rem; 
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
+            position: relative; padding: 2rem 0; margin-top: 3rem;
+            display: flex; flex-direction: column; gap: 2rem;
             -webkit-mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent); 
             mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent); 
         }
-        .logos-slide { 
-            display: flex; 
-            width: fit-content; 
-            animation: scroll 60s linear infinite; 
-        }
-        .logos-slide.reverse {
-            animation-direction: reverse;
-        }
+        .logos-slide { display: flex; width: fit-content; animation: scroll 60s linear infinite; }
+        .logos-slide.reverse { animation-direction: reverse; }
         .logos-slide img {
-            height: 45px;
-            margin: 0 40px;
-            filter: grayscale(1) opacity(0.6);
+            height: 45px; margin: 0 40px; filter: grayscale(1) opacity(0.6);
             transition: filter 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
         }
-        .logos-slide img:hover {
-            filter: grayscale(0) opacity(1);
-            transform: scale(1.1);
-        }
+        .logos-slide img:hover { filter: grayscale(0) opacity(1); transform: scale(1.1); }
         @keyframes scroll { 
             0% { transform: translateX(0); } 
             100% { transform: translateX(-50%); } 
         }
 
+        /* --- CARROSSEL DEPOIMENTOS --- */
         .carousel-container { position: relative; margin-top: 4rem; }
         .carousel-wrapper { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 2rem; padding: 2rem 1rem; scroll-behavior: smooth; }
         .carousel-wrapper::-webkit-scrollbar { display: none; }
@@ -360,215 +274,149 @@
         .carousel-btn:hover { background-color: rgba(255, 255, 255, 0.2); }
         #prev-btn { left: -25px; }
         #next-btn { right: -25px; }
+
+        /* --- PORQUE AGORA --- */
         #porque-agora .highlight-box { 
             background-image: url('2026.png'); 
-            background-size: cover; 
-            background-position: center 25%;
-            color: #fff; 
-            padding: 5rem; 
-            border-radius: 30px; 
-            margin-top: 3rem; 
-            position: relative; 
-            overflow: hidden; 
-            z-index: 1; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 500px;
+            background-size: cover; background-position: center 25%;
+            color: #fff; padding: 5rem; border-radius: 30px;
+            margin-top: 3rem; position: relative; overflow: hidden;
+            z-index: 1; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; min-height: 500px;
         }
         #porque-agora .highlight-box::before { 
-            content: ''; 
-            position: absolute; 
-            top: 0; left: 0; 
-            width: 100%; height: 100%; 
-            background-color: rgba(0, 0, 0, 0.4);
+            content: ''; position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4);
             z-index: -1; 
         }
+        .highlight-box h2 { color: #fff; font-size: clamp(2rem, 4vw, 3rem); text-shadow: 0px 0px 15px rgba(0, 0, 0, 0.7); margin-bottom: 0; }
         .highlight-box h2, .highlight-box p { position: relative; z-index: 2; }
-        
-        .highlight-box h2 {
-            color: #fff;
-            font-size: clamp(2rem, 4vw, 3rem);
-            text-shadow: 0px 0px 15px rgba(0, 0, 0, 0.7);
-            margin-bottom: 0;
-        }
-        #garantia { background-color: var(--cor-fundo-secundario); }
-        .garantia-box { display: grid; grid-template-columns: 300px 1fr; gap: 4rem; align-items: center; background-color: #1c1c1e; padding: 4rem; border-radius: 30px; text-align: left; }
-        .garantia-seal img { 
-            width: 100%; 
-            height: auto; 
-            filter: grayscale(100%);
-            opacity: 0.7;
-            transition: filter 0.4s ease, opacity 0.4s ease;
-        }
-        .garantia-text h3 { 
-            font-size: 2rem; 
-            color: var(--cor-texto-secundario);
-            transition: color 0.4s ease;
-        }
-        .garantia-text p { color: var(--cor-texto-secundario); font-size: 1.1rem; line-height: 1.7; margin-top: 1rem; }
-        .garantia-text strong { 
-            color: var(--cor-texto-principal);
-            transition: color 0.4s ease;
-        }
-        .garantia-box:hover .garantia-seal img {
-            filter: grayscale(0%);
-            opacity: 1;
-        }
-        .garantia-box:hover .garantia-text h3,
-        .garantia-box:hover .garantia-text strong {
-            color: var(--cor-verde);
+
+        /* --- NOVA SEÇÃO: VISÃO ESTRATÉGICA (CARDS MODERNOS) --- */
+        #visao-estrategica {
+            background-color: var(--cor-fundo); 
+            padding-top: 4rem; 
         }
 
-        #criador {
-            background-color: var(--cor-fundo);
-            padding: 8rem 0 2rem 0;
-        }
-        .creator-grid {
+        .vision-grid {
             display: grid;
-            grid-template-columns: 400px 1fr;
-            gap: 5rem;
-            align-items: flex-start; 
-            text-align: left;
-            margin-top: 4rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+            margin-bottom: 3rem;
         }
-        .creator-image-wrapper {
+
+        .vision-card {
             position: relative;
+            height: 450px; 
+            border-radius: 30px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            cursor: crosshair;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
+                        box-shadow 0.6s ease, 
+                        border-color 0.4s ease;
         }
-        .creator-image-wrapper::after {
+
+        .vision-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.215, 0.610, 0.355, 1.000), 
+                        filter 0.5s ease;
+        }
+
+        .vision-card::after {
             content: '';
             position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            background: conic-gradient(from 180deg at 50% 50%, var(--cor-verde) 0deg, rgba(52, 199, 89, 0.5) 120deg, rgba(52, 199, 89, 0) 360deg);
-            z-index: -1;
-            border-radius: 40px;
-            opacity: 0.2;
-            transition: opacity 0.4s ease, transform 0.4s ease;
-        }
-        .creator-image-wrapper:hover::after {
-            opacity: 0.5;
-            transform: scale(1.02) rotate(15deg);
-        }
-        .creator-image-wrapper img {
-            width: 100%;
-            border-radius: 30px;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.4);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        .creator-text-content h4 {
-            font-size: 1.5rem;
-            color: var(--cor-verde);
-            margin-top: 2.5rem;
-            margin-bottom: 1rem;
-        }
-        .creator-text-content h4:first-child {
-            margin-top: 0;
-        }
-        .creator-text-content p, .creator-text-content li {
-            color: var(--cor-texto-secundario);
-            font-size: 1.1rem;
-            line-height: 1.7;
-            margin-bottom: 1rem;
-        }
-        .creator-text-content ul {
-            list-style: none;
-            padding-left: 0;
-        }
-        .creator-text-content li {
-            padding-left: 1.5rem;
-            position: relative;
-        }
-        .creator-text-content li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: var(--cor-verde);
-            font-weight: 700;
-        }
-        .text-green {
-            color: var(--cor-verde);
-            font-weight: 600;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            opacity: 0.6;
+            transition: opacity 0.5s ease;
+            z-index: 1;
         }
 
-        #preco { 
-            padding-top: 2rem;
-            padding-bottom: 4rem; 
+        .vision-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 30px 60px rgba(52, 199, 89, 0.15);
+            border-color: var(--cor-verde);
         }
+
+        .vision-card:hover img {
+            transform: scale(1.1); 
+            filter: brightness(1.1);
+        }
+
+        .vision-card:hover::after {
+            opacity: 0.3;
+        }
+
+        .vision-footer-desc {
+            font-size: 1.3rem;
+            color: var(--cor-texto-secundario);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 3rem;
+        }
+
+        /* --- GARANTIA --- */
+        #garantia { background-color: var(--cor-fundo-secundario); }
+        .garantia-box { display: grid; grid-template-columns: 300px 1fr; gap: 4rem; align-items: center; background-color: #1c1c1e; padding: 4rem; border-radius: 30px; text-align: left; }
+        .garantia-seal img { width: 100%; height: auto; filter: grayscale(100%); opacity: 0.7; transition: filter 0.4s ease, opacity 0.4s ease; }
+        .garantia-text h3 { font-size: 2rem; color: var(--cor-texto-secundario); transition: color 0.4s ease; }
+        .garantia-text p { color: var(--cor-texto-secundario); font-size: 1.1rem; line-height: 1.7; margin-top: 1rem; }
+        .garantia-text strong { color: var(--cor-texto-principal); transition: color 0.4s ease; }
+        .garantia-box:hover .garantia-seal img { filter: grayscale(0%); opacity: 1; }
+        .garantia-box:hover .garantia-text h3, .garantia-box:hover .garantia-text strong { color: var(--cor-verde); }
+
+        /* --- CRIADOR --- */
+        #criador { background-color: var(--cor-fundo); padding: 8rem 0 2rem 0; }
+        .creator-grid { display: grid; grid-template-columns: 400px 1fr; gap: 5rem; align-items: flex-start; text-align: left; margin-top: 4rem; }
+        .creator-image-wrapper { position: relative; }
+        .creator-image-wrapper::after {
+            content: ''; position: absolute; top: -10px; left: -10px; right: -10px; bottom: -10px;
+            background: conic-gradient(from 180deg at 50% 50%, var(--cor-verde) 0deg, rgba(52, 199, 89, 0.5) 120deg, rgba(52, 199, 89, 0) 360deg);
+            z-index: -1; border-radius: 40px; opacity: 0.2; transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .creator-image-wrapper:hover::after { opacity: 0.5; transform: scale(1.02) rotate(15deg); }
+        .creator-image-wrapper img { width: 100%; border-radius: 30px; box-shadow: 0 25px 60px rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); }
+        .creator-text-content h4 { font-size: 1.5rem; color: var(--cor-verde); margin-top: 2.5rem; margin-bottom: 1rem; }
+        .creator-text-content h4:first-child { margin-top: 0; }
+        .creator-text-content p, .creator-text-content li { color: var(--cor-texto-secundario); font-size: 1.1rem; line-height: 1.7; margin-bottom: 1rem; }
+        .creator-text-content ul { list-style: none; padding-left: 0; }
+        .creator-text-content li { padding-left: 1.5rem; position: relative; }
+        .creator-text-content li::before { content: '✓'; position: absolute; left: 0; color: var(--cor-verde); font-weight: 700; }
+        .text-green { color: var(--cor-verde); font-weight: 600; }
+
+        /* --- PREÇO --- */
+        #preco { padding-top: 2rem; padding-bottom: 4rem; }
         .price-card {
             background: linear-gradient(145deg, #1c1c1e, #111111);
-            border-radius: 30px;
-            padding: 3rem;
-            max-width: 800px;
-            margin: 2rem auto 0 auto;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px; padding: 3rem; max-width: 800px;
+            margin: 2rem auto 0 auto; border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
         }
         .price-card .n8n-logo { max-width: 150px; margin-bottom: 2rem; }
         .price-card h3 { font-size: 1.5rem; color: var(--cor-texto-secundario); margin-bottom: 1rem; }
-        .price-display {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-bottom: 2.5rem;
-            flex-wrap: wrap;
-        }
-        .price-display .old-price {
-            font-size: clamp(2rem, 5vw, 2.5rem);
-            color: var(--cor-vermelho-riscado);
-            text-decoration: line-through;
-            text-decoration-thickness: 3px;
-            opacity: 0.7;
-        }
-        .price-display .new-price {
-            font-size: clamp(3.5rem, 10vw, 5rem);
-            color: var(--cor-verde-fluorescente);
-            font-weight: 700;
-            line-height: 1;
-        }
+        .price-display { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
+        .price-display .old-price { font-size: clamp(2rem, 5vw, 2.5rem); color: var(--cor-vermelho-riscado); text-decoration: line-through; text-decoration-thickness: 3px; opacity: 0.7; }
+        .price-display .new-price { font-size: clamp(3.5rem, 10vw, 5rem); color: var(--cor-verde-fluorescente); font-weight: 700; line-height: 1; }
         .price-card .btn { margin-top: 1rem; }
+
+        /* --- GARANTIA / OBJEÇÕES --- */
         #garantia-objecoes { padding-top: 0; }
-        .garantia-objecoes-grid {
-            display: grid;
-            grid-template-columns: 350px 1fr;
-            gap: 4rem;
-            align-items: center;
-            margin-top: 4rem;
-            text-align: left;
-        }
-        .garantia-blindada-seal {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .garantia-blindada-seal img {
-            max-width: 100%;
-            animation: gentle-float 5s ease-in-out infinite;
-        }
-        .objeccoes-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-        .objeccao-card {
-            background-color: var(--cor-fundo-secundario);
-            padding: 2rem;
-            border-radius: 20px;
-            border-left: 4px solid var(--cor-destaque);
-        }
-        .objeccao-card h4 {
-            font-size: 1.3rem;
-            margin-bottom: 0.75rem;
-            color: var(--cor-texto-principal);
-        }
-        .objeccao-card p {
-            color: var(--cor-texto-secundario);
-            line-height: 1.6;
-        }
+        .garantia-objecoes-grid { display: grid; grid-template-columns: 350px 1fr; gap: 4rem; align-items: center; margin-top: 4rem; text-align: left; }
+        .garantia-blindada-seal { display: flex; align-items: center; justify-content: center; }
+        .garantia-blindada-seal img { max-width: 100%; animation: gentle-float 5s ease-in-out infinite; }
+        .objeccoes-container { display: flex; flex-direction: column; gap: 1.5rem; }
+        .objeccao-card { background-color: var(--cor-fundo-secundario); padding: 2rem; border-radius: 20px; border-left: 4px solid var(--cor-destaque); }
+        .objeccao-card h4 { font-size: 1.3rem; margin-bottom: 0.75rem; color: var(--cor-texto-principal); }
+        .objeccao-card p { color: var(--cor-texto-secundario); line-height: 1.6; }
+
+        /* --- FLOATING BUTTONS & FOOTER --- */
         .floating-buttons { position: fixed; bottom: 20px; right: 20px; z-index: 1000; display: flex; flex-direction: column; gap: 15px; }
         .float-btn { width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(0,0,0,0.3); transition: transform 0.3s ease, background-color 0.3s ease; cursor: pointer; border: none; text-decoration: none; }
         .float-btn:hover { transform: scale(1.1); }
@@ -576,12 +424,8 @@
         #whatsapp-btn { background-color: #25D366; }
         #back-to-top-btn { background-color: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); opacity: 0; pointer-events: none; transform: translateY(20px); transition: opacity 0.3s ease, transform 0.3s ease; }
         #back-to-top-btn.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
-        footer {
-            background-color: var(--cor-fundo-secundario);
-            color: var(--cor-texto-secundario);
-            padding: 4rem 0 2rem 0;
-            font-size: 0.9rem;
-        }
+
+        footer { background-color: var(--cor-fundo-secundario); color: var(--cor-texto-secundario); padding: 4rem 0 2rem 0; font-size: 0.9rem; }
         .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
         .footer-grid h4 { color: var(--cor-texto-principal); font-size: 1rem; margin-bottom: 1rem; }
         .footer-grid ul { list-style: none; }
@@ -589,55 +433,28 @@
         .footer-grid a { color: var(--cor-texto-secundario); text-decoration: none; transition: color 0.3s ease; }
         .footer-grid a:hover { color: var(--cor-destaque); }
         .footer-bottom { border-top: 1px solid #333; padding-top: 2rem; text-align: center; }
-        @keyframes gentle-float {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-            100% { transform: translateY(0); }
-        }
+
+        /* --- RESPONSIVIDADE --- */
         @media (max-width: 1024px) {
             .depoimento-card { flex: 0 0 47%; max-width: 47%; }
-            .feature-section, .feature-section.reverse { 
-                grid-template-columns: 1fr; 
-                gap: 2rem;
-            }
+            .feature-section, .feature-section.reverse { grid-template-columns: 1fr; gap: 2rem; }
             .feature-section.reverse .feature-image { order: 0; }
             .feature-image { margin-bottom: 2rem; }
-            .garantia-box { 
-                grid-template-columns: 1fr; 
-                text-align: center; 
-                gap: 2rem;
-            }
+            .garantia-box { grid-template-columns: 1fr; text-align: center; gap: 2rem; }
             .garantia-seal { max-width: 200px; margin: 0 auto 2rem auto; }
-            .garantia-objecoes-grid { 
-                grid-template-columns: 1fr; 
-                gap: 3rem;
-            }
+            .garantia-objecoes-grid { grid-template-columns: 1fr; gap: 3rem; }
             .garantia-blindada-seal { max-width: 250px; margin: 0 auto; }
-             /* --- Media Query para Seção Criador --- */
-            .creator-grid {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-                text-align: center;
-            }
-            .creator-image-wrapper {
-                max-width: 350px;
-                margin: 0 auto;
-            }
-            .creator-text-content {
-                text-align: left;
-            }
+            .creator-grid { grid-template-columns: 1fr; gap: 3rem; text-align: center; }
+            .creator-image-wrapper { max-width: 350px; margin: 0 auto; }
+            .creator-text-content { text-align: left; }
         }
         @media (max-width: 768px) {
             section { padding: 5rem 0; }
             .container { padding: 0 1.5rem; }
             h2 { font-size: clamp(2rem, 7vw, 2.5rem); }
             p.subtitulo { font-size: 1.2rem; }
-            .header-logo-container {
-                padding: 1.5rem;
-            }
-            .header-logo {
-                max-height: 165px;
-            }
+            .header-logo-container { padding: 1.5rem; }
+            .header-logo { max-height: 165px; }
             .title-grid { grid-template-columns: 1fr; gap: 1rem; }
             .vertical-text, .left, .right { display: none; }
             .poder-card { padding: 2rem 1.5rem; }
@@ -645,46 +462,27 @@
             .depoimento-card { flex: 0 0 90%; max-width: 90%; padding: 2rem; }
             .carousel-wrapper { padding: 1.5rem 0; }
             .carousel-btn { display: none; }
-            #porque-agora .highlight-box {
-                min-height: 380px;
-                padding: 3rem 1.5rem;
-                margin-top: 2rem;
-                background-position: center top;
-            }
+            #porque-agora .highlight-box { min-height: 380px; padding: 3rem 1.5rem; margin-top: 2rem; background-position: center top; }
             .garantia-box { padding: 2.5rem 1.5rem; }
             .price-card { padding: 2.5rem 1.5rem; }
             .price-display .new-price { font-size: clamp(3rem, 12vw, 4rem); }
             .garantia-objecoes-grid { margin-top: 2.5rem; }
             .objeccao-card { padding: 1.5rem; }
             .footer-grid { text-align: center; }
+            .vision-card { height: 350px; }
+            .vision-footer-desc { font-size: 1.1rem; }
         }
         @media (max-width: 480px) {
             h1 { font-size: 2.5rem; }
             p.subtitulo { font-size: 1.1rem; }
-            .btn {
-                padding: 0.9rem 2rem;
-                font-size: 1rem;
-            }
+            .btn { padding: 0.9rem 2rem; font-size: 1rem; }
             .play-button-overlay { width: 75px; height: 75px; }
             .play-button-overlay svg { width: 30px; height: 30px; }
-            .depoimento-card {
-                flex: 0 0 95%;
-                max-width: 95%;
-            }
-            .price-display {
-                gap: 1rem;
-            }
-            .price-display .new-price {
-                font-size: clamp(3rem, 15vw, 3.5rem);
-            }
-            .floating-buttons {
-                bottom: 15px;
-                right: 15px;
-            }
-            .float-btn {
-                width: 55px;
-                height: 55px;
-            }
+            .depoimento-card { flex: 0 0 95%; max-width: 95%; }
+            .price-display { gap: 1rem; }
+            .price-display .new-price { font-size: clamp(3rem, 15vw, 3.5rem); }
+            .floating-buttons { bottom: 15px; right: 15px; }
+            .float-btn { width: 55px; height: 55px; }
         }
     </style>
 </head>
@@ -762,6 +560,7 @@
                     <div class="logos-slide">
                         <img src="https://cdn.worldvectorlogo.com/logos/whatsapp-3.svg" alt="WhatsApp">
                         <img src="instagram.png" alt="Instagram">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_Apps_Script.svg" alt="Google Apps Script">
                         <img src="google.png" alt="Google Sheets">
                         <img src="https://cdn.worldvectorlogo.com/logos/slack-new-logo.svg" alt="Slack">
                         <img src="gmail.png" alt="gmail">
@@ -774,6 +573,7 @@
                         <img src="https://cdn.worldvectorlogo.com/logos/telegram-1.svg" alt="Telegram">
                         <img src="https://cdn.worldvectorlogo.com/logos/whatsapp-3.svg" alt="WhatsApp">
                         <img src="instagram.png" alt="Instagram">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_Apps_Script.svg" alt="Google Apps Script">
                         <img src="google.png" alt="Google Sheets">
                         <img src="https://cdn.worldvectorlogo.com/logos/slack-new-logo.svg" alt="Slack">
                         <img src="gmail.png" alt="gmail">
@@ -790,6 +590,7 @@
                         <img src="instagram.png" alt="Instagram">
                         <img src="shetts.png" alt="Google Sheets">
                         <img src="https://cdn.worldvectorlogo.com/logos/slack-new-logo.svg" alt="Slack">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_Apps_Script.svg" alt="Google Apps Script">
                         <img src="gmail.png" alt="gmail">
                         <img src="meta.png" alt="Meta Ads">
                         <img src="https://cdn.worldvectorlogo.com/logos/trello.svg" alt="Trello">
@@ -815,7 +616,42 @@
             </div>
         </section>
         <section id="depoimentos"> <div class="container"> <h2 class="animate-on-scroll">Outros heróis que já estão no campo de batalha.</h2> <p class="subtitulo animate-on-scroll" style="transition-delay: 0.1s;">Eles começaram do mesmo ponto que você. Hoje, eles constroem o futuro.</p> <div class="carousel-container"> <button id="prev-btn" class="carousel-btn" aria-label="Anterior"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button> <div class="carousel-wrapper" id="carousel-wrapper"> <div class="depoimento-card"><blockquote>"Eu não sabia nada sobre automação. Em 30 dias, fechei meu primeiro contrato com uma clínica de estética, automatizando o agendamento deles. O curso não me deu só a técnica, me deu a confiança para ligar e vender."</blockquote><div class="author"><img src="https://images.pexels.com/photos/837358/pexels-photo-837358.jpeg" alt="Carlos Silva"><div class="author-info"><strong>Carlos Silva</strong><small>Ex-Analista Administrativo</small></div></div></div> <div class="depoimento-card"><blockquote>"O módulo de prospecção é ouro puro. Aprendi a abordar donos de hamburguerias e mostrar o valor. A automação de pedidos via WhatsApp que eu implementei para um cliente pagou o curso em duas semanas."</blockquote><div class="author"><img src="https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg" alt="Juliana Martins"><div class="author-info"><strong>Juliana Martins</strong><small>Designer Gráfico & Empreendedora</small></div></div></div> <div class="depoimento-card"><blockquote>"Eu achava que era complexo demais. Mas a didática é surreal. Hoje eu gerencio as automações de três barbearias e estou saindo do meu emprego CLT. É uma mudança de vida, literalmente."</blockquote><div class="author"><img src="https://images.pexels.com/photos/842571/pexels-photo-842571.jpeg" alt="Ricardo Almeida"><div class="author-info"><strong>Ricardo Almeida</strong><small>Ex-Vendedor de Loja</small></div></div></div> <div class="depoimento-card"><blockquote>"A liberdade de tempo que ganhei é inacreditável. Criei um sistema para um salão de beleza que funciona sozinho. Agora recebo mensalmente e só preciso dar suporte esporádico. Mágico!"</blockquote><div class="author"><img src="https://images.pexels.com/photos/937481/pexels-photo-937481.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Fernando Lima"><div class="author-info"><strong>Fernando Lima</strong><small>Ex-Garçom</small></div></div></div> <div class="depoimento-card"><blockquote>"Graças ao n8n, consegui automatizar todo o processo de onboarding de clientes da minha consultoria. Ganhei tempo e profissionalismo. Meus clientes notaram a diferença!"</blockquote><div class="author"><img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Roberto Costa"><div class="author-info"><strong>Roberto Costa</strong><small>Consultor de Marketing</small></div></div></div> <div class="depoimento-card"><blockquote>"Eu sempre quis trabalhar de casa, mas não sabia como. O n8n me deu uma nova carreira. Hoje, crio automações para pequenas empresas e tenho a flexibilidade que sempre sonhei."</blockquote><div class="author"><img src="https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Mariana Souza"><div class="author-info"><strong>Mariana Souza</strong><small>Assistente Virtual Autônoma</small></div></div></div> <div class="depoimento-card"><blockquote>"O suporte da comunidade é incrível. Sempre que tive uma dúvida, alguém me ajudou. Isso faz toda a diferença para quem está começando."</blockquote><div class="author"><img src="https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Lucas Pereira"><div class="author-info"><strong>Lucas Pereira</strong><small>Estudante e Futuro Empreendedor</small></div></div></div> <div class="depoimento-card"><blockquote>"Consegui otimizar o fluxo de trabalho do meu e-commerce, desde o processamento de pedidos até as notificações de envio. Aumentei a satisfação do cliente e reduzi o trabalho manual em 50%."</blockquote><div class="author"><img src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Patrícia Gomes"><div class="author-info"><strong>Patrícia Gomes</strong><small>Dona de E-commerce</small></div></div></div> <div class="depoimento-card"><blockquote>"Aprender n8n foi um divisor de águas. Agora sou capaz de criar soluções sob medida para os problemas dos meus clientes, algo que antes eu só sonhava em fazer com programação."</blockquote><div class="author"><img src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Guilherme Santos"><div class="author-info"><strong>Guilherme Santos</strong><small>Desenvolvedor Frontend</small></div></div></div> <div class="depoimento-card"><blockquote>"O retorno do investimento foi quase imediato. O primeiro projeto que peguei usando o que aprendi já cobriu o valor do curso e ainda sobrou. Altamente recomendado!"</blockquote><div class="author"><img src="https://images.pexels.com/photos/1310522/pexels-photo-1310522.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Aline Ferreira"><div class="author-info"><strong>Aline Ferreira</strong><small>Analista de Dados</small></div></div></div> <div class="depoimento-card"><blockquote>"Minha vida antes era preencher planilhas. Com o n8n, criei um sistema que faz isso para mim. Agora uso meu tempo para tarefas mais estratégicas. Minha produtividade explodiu!"</blockquote><div class="author"><img src="https://images.pexels.com/photos/1484809/pexels-photo-1484809.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Thiago Rocha"><div class="author-info"><strong>Thiago Rocha</strong><small>Gerente de Projetos</small></div></div></div> <div class="depoimento-card"><blockquote>"Eu estava cansado da rotina. O n8n me mostrou um caminho para empreender no digital e oferecer um serviço de alto valor para o mercado. É realmente uma virada de chave."</blockquote><div class="author"><img src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Diego Oliveira"><div class="author-info"><strong>Diego Oliveira</strong><small>Ex-Comerciante</small></div></div></div> </div> <button id="next-btn" class="carousel-btn" aria-label="Próximo"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button> </div> </div> </section>
-        <section id="porque-agora"> <div class="container"> <h2 class="animate-on-scroll"> Em 2026, o mundo se dividirá. </h2> <p class="subtitulo animate-on-scroll" style="transition-delay: 0.1s;"> Haverá os 99% que estarão distraídos com eleições, Carnaval e Copa do Mundo, presos na inércia, esperando o "momento perfeito".<br> E haverá o 1% que usou 2025 para construir a base. Que se preparou enquanto todos procrastinavam. Que chegará em 2026 não para começar, mas para acelerar. </p> <div class="highlight-box animate-on-scroll" style="transition-delay: 0.2s;"> <a href="https://go.hotmart.com/G102346790F?ap=8048" target="_blank" class="btn">A escolha é feita hoje.</a> </div> </div> </section> <section id="garantia"> <div class="container"> <div class="garantia-box animate-on-scroll"> <div class="garantia-seal"> <img src="garantia.png" alt="Selo de 100% Garantia"> </div> <div class="garantia-text"> <h3>Sua Segurança é Prioridade. O Risco é Todo Nosso.</h3> <p><strong>Garantia de 7 Dias:</strong> Explore o curso, assista às primeiras aulas, participe da comunidade. Se por qualquer motivo sentir que não é para você, peça seu dinheiro de volta. Simples assim, sem perguntas.</p> <p><strong>Garantimos se você estudar se esforçar de verdade com proposito:</strong> Aprender tudo no curso aplicar <strong>TUDO</strong> o que ensinamos no curso — ir para o campo de batalha, ligar, mandar mensagens, chamar no direct do instagram — você em 30 dias a 40 dias faz três vezes o que investiu em você com esse curso <strong>pode ter certeza disso tem muita mas muita empresas precisando desses serviços.</strong>. O sucesso aqui depende exclusivamente da sua execução. Nós garantimos o método.</p> </div> </div> </div> </section> <section id="garantia-satisfacao" style="padding-top: 0; background-color: var(--cor-fundo-secundario);"> <div class="container"> <div class="garantia-box animate-on-scroll"> <div class="garantia-seal"> <img src="satisfação.png" alt="Selo de 100% Garantia"> </div> <div class="garantia-text"> <h3>100% de Satisfação — Curso n8n Automação.</h3> <p><strong>Este não é apenas mais um curso...</strong> é uma porta de entrada para uma das profissões que mais crescem no mundo. O Curso n8n foi criado para resolver um problema real: a falta de profissionais capazes de automatizar processos de forma simples, eficiente e sem precisar programar.</p> <p><strong>Aqui você aprende, na prática, como transformar</strong> tarefas manuais e repetitivas em sistemas automáticos que funcionam por você, economizando tempo, dinheiro e energia — seja para o seu negócio ou para seus futuros clientes. <strong>E o melhor: 100% de satisfação garantida.</strong></p> </div> </div> </div> </section> <section id="criador"> <div class="container"> <h2 class="animate-on-scroll">O arquiteto da sua nova carreira</h2> <p class="subtitulo animate-on-scroll" style="transition-delay: 0.1s;"> Uma metodologia criada por quem entende na prática os desafios do mercado e o poder da automação para gerar resultados reais. </p> <div class="creator-grid"> <div class="creator-image-wrapper animate-on-scroll" style="transition-delay: 0.2s;"> <img src="criador1.png" alt="Foto do Criador do Curso"> </div> <div class="creator-text-content animate-on-scroll" style="transition-delay: 0.3s;"> <h4 class="text-green">Sobre o Produto</h4> <p>O meu objetivo com este curso é capacitar você a <span class="text-green">criar seus próprios agentes de IA usando o n8n</span>, a plataforma líder que une automação, no-code e inteligência artificial.</p> <p>Você vai aprender, passo a passo, a construir agentes inteligentes que processam dados, interagem com usuários e executam tarefas automaticamente — tudo isso para <span class="text-green">otimizar e acelerar seus fluxos de trabalho.</span></p> <h4>Mas afinal, o que é um <span class="text-green">Agente de IA</span>?</h4> <p>É um sistema autônomo capaz de perceber o ambiente, tomar decisões com base em instruções e agir, realizando tarefas como enviar e-mails, atualizar bases de dados, responder mensagens e muito mais.</p> <h4>E o que é o <span class="text-green">n8n</span>?</h4> <p>É uma plataforma visual de automação que permite integrar modelos de IA (como OpenAI, Google e Hugging Face) e ferramentas como Google Sheets, Notion, Slack, entre outras — <span class="text-green">tudo sem precisar programar.</span></p> <h4>O que você vai <span class="text-green">aprender</span>:</h4> <ul> <li>Criar agentes de IA personalizados e totalmente funcionais;</li> <li>Automatizar processos e tomadas de decisão;</li> <li>Integrar modelos avançados de IA às suas rotinas;</li> <li>Desenvolver assistentes inteligentes para WhatsApp, Telegram e Slack;</li> <li>Conectar CRMs, ERPs e bancos de dados;</li> <li>Aplicar sistemas RAG (com Pinecone e Supabase);</li> <li>Adicionar memória e contexto aos agentes para respostas mais humanas.</li> </ul> <h4><span class="text-green">Conteúdo</span> do Curso:</h4> <ul> <li>Fundamentos de IA e n8n;</li> <li>Criação de workflows simples e avançados;</li> <li>Integração com ferramentas e modelos de IA;</li> <li>Uso de embeddings, memória e sistemas inteligentes em cadeia.</li> </ul> <h4>Para <span class="text-green">quem</span> é este curso:</h4> <p>Este curso é para <span class="text-green">qualquer pessoa</span>, desde iniciantes até profissionais que desejam entrar no mundo da automação e da inteligência artificial, sem precisar saber programar.</p> <h4><span class="text-green">Diferencial</span>:</h4> <p>Aqui, o foco é <span class="text-green">100% prático</span>. Você vai aprender com casos reais, entendendo como aplicar tudo na prática para gerar resultados. Ao final, você não só vai saber criar agentes de IA — vai saber identificar oportunidades, automatizar processos e se tornar autônomo nesse novo mercado.</p> </div> </div> </div> </section>
+        <section id="porque-agora"> <div class="container"> <h2 class="animate-on-scroll"> Em 2026, o mundo se dividirá. </h2> <p class="subtitulo animate-on-scroll" style="transition-delay: 0.1s;"> Haverá os 99% que estarão distraídos com eleições, Carnaval e Copa do Mundo, presos na inércia, esperando o "momento perfeito".<br> E haverá o 1% que usou 2025 para construir a base. Que se preparou enquanto todos procrastinavam. Que chegará em 2026 não para começar, mas para acelerar. </p> <div class="highlight-box animate-on-scroll" style="transition-delay: 0.2s;"> <a href="https://go.hotmart.com/G102346790F?ap=8048" target="_blank" class="btn">A escolha é feita hoje.</a> </div> </div> </section>
+        
+        <section id="visao-estrategica">
+            <div class="container">
+                
+                <h2 class="animate-on-scroll">Aqui Não Tem Milagre: Tem Trabalho e Persistência.</h2>
+                <p class="subtitulo animate-on-scroll" style="transition-delay: 0.1s;">
+                    Aqui não tem guru vendendo ilusão — aqui tem realidade, esforço e construção de verdade.
+
+                </p>
+
+                <div class="vision-grid">
+                    <div class="vision-card animate-on-scroll" style="transition-delay: 0.2s;">
+                        <img src="1.jpg" alt="Estratégia e Visão">
+                    </div>
+
+                    <div class="vision-card animate-on-scroll" style="transition-delay: 0.3s;">
+                        <img src="2.jpg" alt="Tecnologia e Automação">
+                    </div>
+
+                    <div class="vision-card animate-on-scroll" style="transition-delay: 0.4s;">
+                        <img src="3.jpg" alt="Liberdade e Escala">
+                    </div>
+                </div>
+
+                <div class="animate-on-scroll" style="transition-delay: 0.5s;">
+                    <p class="vision-footer-desc">
+                        Esquece esse papo de ficar rico em um mês, de mudar de vida em três. Pode até acontecer? Pode. Mas também pode não rolar resultado nenhum se você não tiver disciplina, foco e força de vontade.
+                        A verdade é uma só: não existe fórmula mágica. Não existe pílula do sucesso. Existe trabalho duro, persistência diária e a coragem de continuar mesmo quando nada parece funcionar.
+                        Se você veio atrás de promessas vazias, esse não é seu lugar.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+        <section id="garantia"> <div class="container"> <div class="garantia-box animate-on-scroll"> <div class="garantia-seal"> <img src="garantia.png" alt="Selo de 100% Garantia"> </div> <div class="garantia-text"> <h3>Sua Segurança é Prioridade. O Risco é Todo Nosso.</h3> <p><strong>Garantia de 7 Dias:</strong> Explore o curso, assista às primeiras aulas, participe da comunidade. Se por qualquer motivo sentir que não é para você, peça seu dinheiro de volta. Simples assim, sem perguntas.</p> <p><strong>Garantimos se você estudar se esforçar de verdade com proposito:</strong> Aprender tudo no curso aplicar <strong>TUDO</strong> o que ensinamos no curso — ir para o campo de batalha, ligar, mandar mensagens, chamar no direct do instagram — você em 30 dias a 40 dias faz três vezes o que investiu em você com esse curso <strong>pode ter certeza disso tem muita mas muita empresas precisando desses serviços.</strong>. O sucesso aqui depende exclusivamente da sua execução. Nós garantimos o método.</p> </div> </div> </div> </section> <section id="garantia-satisfacao" style="padding-top: 0; background-color: var(--cor-fundo-secundario);"> <div class="container"> <div class="garantia-box animate-on-scroll"> <div class="garantia-seal"> <img src="satisfação.png" alt="Selo de 100% Garantia"> </div> <div class="garantia-text"> <h3>100% de Satisfação — Curso n8n Automação.</h3> <p><strong>Este não é apenas mais um curso...</strong> é uma porta de entrada para uma das profissões que mais crescem no mundo. O Curso n8n foi criado para resolver um problema real: a falta de profissionais capazes de automatizar processos de forma simples, eficiente e sem precisar programar.</p> <p><strong>Aqui você aprende, na prática, como transformar</strong> tarefas manuais e repetitivas em sistemas automáticos que funcionam por você, economizando tempo, dinheiro e energia — seja para o seu negócio ou para seus futuros clientes. <strong>E o melhor: 100% de satisfação garantida.</strong></p> </div> </div> </div> </section> <section id="criador"> <div class="container"> <h2 class="animate-on-scroll">O arquiteto da sua nova carreira</h2> <p class="subtitulo animate-on-scroll" style="transition-delay: 0.1s;"> Uma metodologia criada por quem entende na prática os desafios do mercado e o poder da automação para gerar resultados reais. </p> <div class="creator-grid"> <div class="creator-image-wrapper animate-on-scroll" style="transition-delay: 0.2s;"> <img src="criador1.png" alt="Foto do Criador do Curso"> </div> <div class="creator-text-content animate-on-scroll" style="transition-delay: 0.3s;"> <h4 class="text-green">Sobre o Produto</h4> <p>O meu objetivo com este curso é capacitar você a <span class="text-green">criar seus próprios agentes de IA usando o n8n</span>, a plataforma líder que une automação, no-code e inteligência artificial.</p> <p>Você vai aprender, passo a passo, a construir agentes inteligentes que processam dados, interagem com usuários e executam tarefas automaticamente — tudo isso para <span class="text-green">otimizar e acelerar seus fluxos de trabalho.</span></p> <h4>Mas afinal, o que é um <span class="text-green">Agente de IA</span>?</h4> <p>É um sistema autônomo capaz de perceber o ambiente, tomar decisões com base em instruções e agir, realizando tarefas como enviar e-mails, atualizar bases de dados, responder mensagens e muito mais.</p> <h4>E o que é o <span class="text-green">n8n</span>?</h4> <p>É uma plataforma visual de automação que permite integrar modelos de IA (como OpenAI, Google e Hugging Face) e ferramentas como Google Sheets, Notion, Slack, entre outras — <span class="text-green">tudo sem precisar programar.</span></p> <h4>O que você vai <span class="text-green">aprender</span>:</h4> <ul> <li>Criar agentes de IA personalizados e totalmente funcionais;</li> <li>Automatizar processos e tomadas de decisão;</li> <li>Integrar modelos avançados de IA às suas rotinas;</li> <li>Desenvolver assistentes inteligentes para WhatsApp, Telegram e Slack;</li> <li>Conectar CRMs, ERPs e bancos de dados;</li> <li>Aplicar sistemas RAG (com Pinecone e Supabase);</li> <li>Adicionar memória e contexto aos agentes para respostas mais humanas.</li> </ul> <h4><span class="text-green">Conteúdo</span> do Curso:</h4> <ul> <li>Fundamentos de IA e n8n;</li> <li>Criação de workflows simples e avançados;</li> <li>Integração com ferramentas e modelos de IA;</li> <li>Uso de embeddings, memória e sistemas inteligentes em cadeia.</li> </ul> <h4>Para <span class="text-green">quem</span> é este curso:</h4> <p>Este curso é para <span class="text-green">qualquer pessoa</span>, desde iniciantes até profissionais que desejam entrar no mundo da automação e da inteligência artificial, sem precisar saber programar.</p> <h4><span class="text-green">Diferencial</span>:</h4> <p>Aqui, o foco é <span class="text-green">100% prático</span>. Você vai aprender com casos reais, entendendo como aplicar tudo na prática para gerar resultados. Ao final, você não só vai saber criar agentes de IA — vai saber identificar oportunidades, automatizar processos e se tornar autônomo nesse novo mercado.</p> </div> </div> </div> </section>
         <section id="preco"> <div class="container"> <div class="price-card animate-on-scroll"> <img src="logon8n.png" alt="n8n Logo" class="n8n-logo"> <h3>Acesso completo à SUA NOVA PORFISSÃO para 2026</h3> <div class="price-display"> <span class="old-price">R$ 397,00</span> <span class="new-price">R$ 297,00</span> </div> <p class="subtitulo" style="margin-bottom: 2rem; font-size: 1.2rem;">Ou 12x de R$ 30,72. Menos que um lanche por mês para mudar sua realidade financeira.</p> <a href="https://go.hotmart.com/G102346790F?ap=8048" target="_blank" class="btn">Garantir minha vaga por R$ 297</a> </div> </div> </section>
         <section id="garantia-objecoes" style="background-color: var(--cor-fundo-secundario);"> <div class="container"> <h2 class="animate-on-scroll">Ainda em dúvida? Vamos resolver isso.</h2> <p class="subtitulo animate-on-scroll" style="transition-delay: 0.1s;">Analisamos as barreiras que te impedem de agir e criamos um caminho para que você as supere.</p> <div class="garantia-objecoes-grid"> <div class="garantia-blindada-seal animate-on-scroll" style="transition-delay: 0.2s;"> <img src="https://cdn-icons-png.flaticon.com/512/1365/1365320.png" alt="Selo de 100% Satisfação Garantida com um escudo"> </div> <div class="objeccoes-container"> <div class="objeccao-card animate-on-scroll" style="transition-delay: 0.3s;"> <h4>"Não tenho conhecimento técnico."</h4> <p>Perfeito. Este curso foi desenhado para quem nunca escreveu uma linha de código. A plataforma n8n é visual. Se você sabe usar um smartphone, você pode criar automações. Nós te guiaremos do zero absoluto até a maestria.</p> </div> <div class="objeccao-card animate-on-scroll" style="transition-delay: 0.4s;"> <h4>"Não sei como ou onde encontrar clientes."</h4> <p>Este não é só um curso de n8n, é uma formação de negócios. Temos módulos inteiros dedicados a prospecção, com scripts prontos, estratégias para abordar clientes (online e locais) e como apresentar o valor do seu serviço de forma irresistível.</p> </div> <div class="objeccao-card animate-on-scroll" style="transition-delay: 0.5s;"> <h4>"E se eu não tiver tempo para me dedicar?"</h4> <p>Este curso é o seu atalho para COMPRAR tempo. Cada hora que você investe aqui pode te devolver centenas de horas no futuro. Além disso, o acesso é vitalício. Estude no seu ritmo, seja 30 minutos por dia ou em uma maratona de fim de semana.</p> </div> </div> </div> </div> </section>
         <section id="cta"> <div class="container"> <h2 class="animate-on-scroll">De espectador a protagonista da sua realidade financeira.</h2> <p class="subtitulo animate-on-scroll" style="transition-delay: 0.1s;">Este curso é o seu campo de treinamento. O mercado de pequenas e médias empresas é o seu campo de batalha. Sua liberdade financeira é a recompensa.</p> <div class="animate-on-scroll" style="transition-delay: 0.2s;"> <a href="https://go.hotmart.com/G102346790F?ap=8048" target="_blank" class="btn">Quero entrar para o 1%</a> </div> </div> </section>
@@ -858,6 +694,9 @@
         // =================================================================================
         const pageConfig = {
             n8nWebhookUrl: 'https://automacoe-n8n.bitxsu.easypanel.host/webhook-test/n8n',
+            
+            // [CODIGOS] NOVA VARIAVEL PARA COLETA DIRETA NO SHEETS VIA APPS SCRIPT
+            googleAppsScriptUrl: 'SUA_URL_DO_GOOGLE_APPS_SCRIPT_AQUI', 
 
             headerVideo: {
                 // Cole qualquer link do YouTube, Google Drive, ou caminho local. Ex:
@@ -910,23 +749,35 @@
 
         async function sendToWebhook(data) {
             const webhookUrl = pageConfig.n8nWebhookUrl;
-            if (!webhookUrl || webhookUrl.trim() === '' || webhookUrl.includes('substitua-pela-url')) {
-                console.warn('Webhook URL não configurada. O envio de dados foi ignorado.');
-                return;
-            }
-            try {
-                const response = await fetch(webhookUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', },
-                    body: JSON.stringify(data),
-                });
-                if (response.ok) {
-                    console.log('Dados enviados ao Webhook com sucesso!', data);
-                } else {
-                    console.error('Falha ao enviar dados para o Webhook. Status:', response.status);
+            if (webhookUrl && webhookUrl.trim() !== '' && !webhookUrl.includes('substitua-pela-url')) {
+                try {
+                    fetch(webhookUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', },
+                        body: JSON.stringify(data),
+                    }).then(res => {
+                        if(res.ok) console.log('Enviado para n8n com sucesso');
+                        else console.error('Erro ao enviar para n8n');
+                    }).catch(e => console.error('Erro rede n8n:', e));
+                } catch (error) {
+                    console.error('Erro geral n8n:', error);
                 }
-            } catch (error) {
-                console.error('Erro de rede ou na requisição para o Webhook:', error);
+            }
+
+            // [CODIGOS] ENVIO SIMULTÂNEO PARA GOOGLE APPS SCRIPT
+            const gasUrl = pageConfig.googleAppsScriptUrl;
+            if (gasUrl && gasUrl.trim() !== '' && !gasUrl.includes('SUA_URL')) {
+                try {
+                    // Usamos no-cors para evitar erro no console, pois GAS redireciona
+                    fetch(gasUrl, {
+                        method: 'POST',
+                        mode: 'no-cors', 
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    }).then(() => console.log('Enviado para Google Sheets (GAS)'));
+                } catch (e) {
+                    console.error('Erro ao enviar para GAS:', e);
+                }
             }
         }
 
